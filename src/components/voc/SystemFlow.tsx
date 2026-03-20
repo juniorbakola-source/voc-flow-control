@@ -1,22 +1,21 @@
 import { motion } from "framer-motion";
 
 const layers = [
-  { id: "input", label: "INPUT", sub: "VOC Sources", color: "bg-info/20 border-info/40 text-info" },
-  { id: "process", label: "PROCESS", sub: "Kano + CTQ + Score", color: "bg-primary/20 border-primary/40 text-primary" },
-  { id: "decide", label: "DECIDE", sub: "Prioritization Engine", color: "bg-warning/20 border-warning/40 text-warning" },
-  { id: "act", label: "ACT", sub: "CAPA Actions", color: "bg-success/20 border-success/40 text-success" },
-  { id: "output", label: "OUTPUT", sub: "KPIs & Metrics", color: "bg-foreground/10 border-foreground/20 text-foreground" },
+  { id: "input", label: "ENTRÉE", sub: "Sources VOC", color: "bg-info/20 border-info/40 text-info" },
+  { id: "process", label: "TRAITEMENT", sub: "Kano + CTQ + Score", color: "bg-primary/20 border-primary/40 text-primary" },
+  { id: "decide", label: "DÉCISION", sub: "Moteur de Priorisation", color: "bg-warning/20 border-warning/40 text-warning" },
+  { id: "act", label: "ACTION", sub: "Actions CAPA", color: "bg-success/20 border-success/40 text-success" },
+  { id: "output", label: "SORTIE", sub: "KPIs & Métriques", color: "bg-foreground/10 border-foreground/20 text-foreground" },
 ];
 
 export function SystemFlow() {
   return (
     <div className="rounded-lg border bg-card p-4">
       <div className="flex items-center gap-2 mb-4">
-        <span className="text-xs font-mono text-primary uppercase tracking-widest">▸ System Architecture</span>
-        <span className="text-xs text-muted-foreground font-mono">— Closed-Loop Control</span>
+        <span className="text-xs font-mono text-primary uppercase tracking-widest">▸ Architecture Système</span>
+        <span className="text-xs text-muted-foreground font-mono">— Boucle Fermée</span>
       </div>
 
-      {/* Forward flow */}
       <div className="flex items-center gap-1 mb-4 overflow-x-auto pb-2">
         {layers.map((layer, i) => (
           <motion.div
@@ -37,7 +36,6 @@ export function SystemFlow() {
         ))}
       </div>
 
-      {/* Feedback loops */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -45,13 +43,13 @@ export function SystemFlow() {
         className="border-t border-dashed pt-3 space-y-2"
       >
         <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-2">
-          Feedback Loops
+          Boucles de Rétroaction
         </div>
         <div className="flex flex-wrap gap-2">
           {[
-            { label: "Action → Input", desc: "CAPAs reduce future VOC signals", type: "balancing" },
-            { label: "CTQ Drift → Escalation", desc: "Threshold breach triggers alert", type: "balancing" },
-            { label: "Governance Review", desc: "Daily / Weekly / Monthly cadence", type: "reinforcing" },
+            { label: "Action → Entrée", desc: "Les CAPA réduisent les signaux VOC futurs", type: "équilibrage" },
+            { label: "Dérive CTQ → Escalade", desc: "Dépassement seuil déclenche alerte", type: "équilibrage" },
+            { label: "Revue Gouvernance", desc: "Cadence Quotidien / Hebdo / Mensuel", type: "renforcement" },
           ].map((loop, i) => (
             <div key={i} className="flex-1 min-w-[140px] p-2 rounded border border-dashed border-primary/20 bg-primary/5">
               <div className="flex items-center gap-1.5">
@@ -60,7 +58,7 @@ export function SystemFlow() {
               </div>
               <div className="text-[9px] font-mono text-muted-foreground mt-1">{loop.desc}</div>
               <div className="text-[8px] font-mono text-muted-foreground/60 mt-1 uppercase">
-                {loop.type} loop
+                Boucle {loop.type}
               </div>
             </div>
           ))}

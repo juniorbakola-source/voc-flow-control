@@ -5,8 +5,8 @@ export function TrendChart() {
   return (
     <div className="rounded-lg border bg-card p-4">
       <div className="flex items-center gap-2 mb-4">
-        <span className="text-xs font-mono text-primary uppercase tracking-widest">▸ Trend Analysis</span>
-        <span className="text-xs text-muted-foreground font-mono">— 6-Month VOC Signals</span>
+        <span className="text-xs font-mono text-primary uppercase tracking-widest">▸ Analyse Tendance</span>
+        <span className="text-xs text-muted-foreground font-mono">— Signaux VOC 6 Mois</span>
       </div>
       <div className="h-[280px]">
         <ResponsiveContainer width="100%" height="100%">
@@ -33,10 +33,10 @@ export function TrendChart() {
             <Legend
               wrapperStyle={{ fontFamily: "JetBrains Mono", fontSize: 11 }}
             />
-            <Line type="monotone" dataKey="complaints" stroke="hsl(38 92% 55%)" strokeWidth={2} dot={{ r: 3 }} />
-            <Line type="monotone" dataKey="rework" stroke="hsl(0 72% 55%)" strokeWidth={2} dot={{ r: 3 }} />
-            <Line type="monotone" dataKey="supplierNCR" stroke="hsl(210 80% 55%)" strokeWidth={2} dot={{ r: 3 }} />
-            <Line type="monotone" dataKey="productNCR" stroke="hsl(174 72% 46%)" strokeWidth={2} dot={{ r: 3 }} />
+            <Line type="monotone" dataKey="plaintes" name="Plaintes" stroke="hsl(38 92% 55%)" strokeWidth={2} dot={{ r: 3 }} />
+            <Line type="monotone" dataKey="reprises" name="Reprises" stroke="hsl(0 72% 55%)" strokeWidth={2} dot={{ r: 3 }} />
+            <Line type="monotone" dataKey="ncFournisseur" name="NC Fournisseur" stroke="hsl(210 80% 55%)" strokeWidth={2} dot={{ r: 3 }} />
+            <Line type="monotone" dataKey="ncProduit" name="NC Produit" stroke="hsl(174 72% 46%)" strokeWidth={2} dot={{ r: 3 }} />
           </LineChart>
         </ResponsiveContainer>
       </div>

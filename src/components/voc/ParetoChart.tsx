@@ -5,8 +5,8 @@ export function ParetoChart() {
   return (
     <div className="rounded-lg border bg-card p-4">
       <div className="flex items-center gap-2 mb-4">
-        <span className="text-xs font-mono text-primary uppercase tracking-widest">▸ Pareto Analysis</span>
-        <span className="text-xs text-muted-foreground font-mono">— Top Issues by Frequency</span>
+        <span className="text-xs font-mono text-primary uppercase tracking-widest">▸ Analyse Pareto</span>
+        <span className="text-xs text-muted-foreground font-mono">— Problèmes par Fréquence</span>
       </div>
       <div className="h-[280px]">
         <ResponsiveContainer width="100%" height="100%">
@@ -39,8 +39,8 @@ export function ParetoChart() {
                 fontSize: 12,
               }}
             />
-            <Bar yAxisId="left" dataKey="count" fill="hsl(174 72% 46%)" radius={[2, 2, 0, 0]} opacity={0.8} />
-            <Line yAxisId="right" dataKey="cumulative" stroke="hsl(38 92% 55%)" strokeWidth={2} dot={{ fill: "hsl(38 92% 55%)", r: 3 }} />
+            <Bar yAxisId="left" dataKey="count" name="Occurrences" fill="hsl(174 72% 46%)" radius={[2, 2, 0, 0]} opacity={0.8} />
+            <Line yAxisId="right" dataKey="cumulative" name="Cumulé %" stroke="hsl(38 92% 55%)" strokeWidth={2} dot={{ fill: "hsl(38 92% 55%)", r: 3 }} />
           </ComposedChart>
         </ResponsiveContainer>
       </div>
