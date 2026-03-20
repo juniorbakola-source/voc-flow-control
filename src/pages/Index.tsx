@@ -18,14 +18,14 @@ const Index = () => {
         <div className="container flex items-center justify-between py-3">
           <div className="flex items-center gap-3">
             <div className="h-8 w-8 rounded bg-primary/20 border border-primary/40 flex items-center justify-center">
-              <span className="text-primary font-mono font-bold text-sm">V</span>
+              <span className="text-primary font-mono font-bold text-sm">E</span>
             </div>
             <div>
               <h1 className="text-sm font-mono font-bold text-foreground tracking-wide">
-                SYSTÈME DE CONTRÔLE VOC
+                ELKA SUSPENSION — SYSTÈME VOC
               </h1>
               <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest">
-                Boucle Fermée Voix du Client • WCM
+                Voix du Client • Amortisseurs Haute Performance • WCM
               </p>
             </div>
           </div>
