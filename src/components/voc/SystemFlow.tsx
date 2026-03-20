@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 
 const layers = [
-  { id: "input", label: "ENTRÉE", sub: "Sources VOC", color: "bg-info/20 border-info/40 text-info" },
+  { id: "input", label: "ENTRÉE", sub: "Plaintes, NC, Avis", color: "bg-info/20 border-info/40 text-info" },
   { id: "process", label: "TRAITEMENT", sub: "Kano + CTQ + Score", color: "bg-primary/20 border-primary/40 text-primary" },
   { id: "decide", label: "DÉCISION", sub: "Moteur de Priorisation", color: "bg-warning/20 border-warning/40 text-warning" },
   { id: "act", label: "ACTION", sub: "Actions CAPA", color: "bg-success/20 border-success/40 text-success" },
@@ -13,7 +13,7 @@ export function SystemFlow() {
     <div className="rounded-lg border bg-card p-4">
       <div className="flex items-center gap-2 mb-4">
         <span className="text-xs font-mono text-primary uppercase tracking-widest">▸ Architecture Système</span>
-        <span className="text-xs text-muted-foreground font-mono">— Boucle Fermée</span>
+        <span className="text-xs text-muted-foreground font-mono">— Boucle Fermée ELKA Suspension</span>
       </div>
 
       <div className="flex items-center gap-1 mb-4 overflow-x-auto pb-2">
@@ -47,9 +47,9 @@ export function SystemFlow() {
         </div>
         <div className="flex flex-wrap gap-2">
           {[
-            { label: "Action → Entrée", desc: "Les CAPA réduisent les signaux VOC futurs", type: "équilibrage" },
-            { label: "Dérive CTQ → Escalade", desc: "Dépassement seuil déclenche alerte", type: "équilibrage" },
-            { label: "Revue Gouvernance", desc: "Cadence Quotidien / Hebdo / Mensuel", type: "renforcement" },
+            { label: "CAPA → Production", desc: "Les actions correctives réduisent les NC et reprises", type: "équilibrage" },
+            { label: "Dérive CTQ → Escalade", desc: "PPM > 10 000 déclenche alerte qualité", type: "équilibrage" },
+            { label: "Revue Gouvernance", desc: "Quotidien (QC) / Hebdo (Direction) / Mensuel (Stratégique)", type: "renforcement" },
           ].map((loop, i) => (
             <div key={i} className="flex-1 min-w-[140px] p-2 rounded border border-dashed border-primary/20 bg-primary/5">
               <div className="flex items-center gap-1.5">

@@ -18,14 +18,14 @@ const Index = () => {
         <div className="container flex items-center justify-between py-3">
           <div className="flex items-center gap-3">
             <div className="h-8 w-8 rounded bg-primary/20 border border-primary/40 flex items-center justify-center">
-              <span className="text-primary font-mono font-bold text-sm">V</span>
+              <span className="text-primary font-mono font-bold text-sm">E</span>
             </div>
             <div>
               <h1 className="text-sm font-mono font-bold text-foreground tracking-wide">
-                SYSTÈME DE CONTRÔLE VOC
+                ELKA SUSPENSION — SYSTÈME VOC
               </h1>
               <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest">
-                Boucle Fermée Voix du Client • WCM
+                Voix du Client • Amortisseurs Haute Performance • WCM
               </p>
             </div>
           </div>
@@ -86,8 +86,8 @@ const Index = () => {
 
         {/* Pied de page */}
         <footer className="border-t pt-4 pb-8 flex items-center justify-between text-[10px] font-mono text-muted-foreground">
-          <span>Système de Contrôle VOC v1.0 • World Class Manufacturing</span>
-          <span>Boucles de rétroaction : 3 actives • Gouvernance : Quotidien / Hebdo / Mensuel</span>
+          <span>ELKA Suspension — Système VOC v1.0 • World Class Manufacturing</span>
+          <span>Données : 559 plaintes • 1 095 inspections • 150 avis en ligne</span>
         </footer>
       </main>
     </div>

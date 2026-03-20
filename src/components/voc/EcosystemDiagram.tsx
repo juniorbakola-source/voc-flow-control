@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 
-// --- Data definitions ---
+// --- Nœuds et liens du diagramme écosystème ELKA Suspension ---
 interface FlowNode {
   id: string;
   label: string;
@@ -18,57 +18,59 @@ interface FlowLink {
 }
 
 const nodes: FlowNode[] = [
-  // Sources VOC (left)
-  { id: "plaintes", label: "Réclamations\nClients", icon: "📋", group: "source", x: 5, y: 10 },
-  { id: "social", label: "Avis Réseaux\nSociaux", icon: "📡", group: "source", x: 5, y: 28 },
-  { id: "nc-produit", label: "NC Produit\nFini", icon: "⚠️", group: "source", x: 5, y: 46 },
-  { id: "nc-fournisseur", label: "NC\nFournisseurs", icon: "📦", group: "source", x: 5, y: 64 },
-  { id: "reprises", label: "Reprises en\nProduction", icon: "🔧", group: "source", x: 5, y: 82 },
+  // Sources VOC réelles ELKA (gauche)
+  { id: "plaintes", label: "Plaintes\nClients (559)", icon: "📋", group: "source", x: 5, y: 10 },
+  { id: "avis", label: "Avis en Ligne\n& Réseaux (150)", icon: "📡", group: "source", x: 5, y: 28 },
+  { id: "nc-produit", label: "NC Produit\nFini (151)", icon: "⚠️", group: "source", x: 5, y: 46 },
+  { id: "nc-fournisseur", label: "NC Réception\nFournisseurs", icon: "📦", group: "source", x: 5, y: 64 },
+  { id: "reprises", label: "Reprises\nProduction", icon: "🔧", group: "source", x: 5, y: 82 },
 
-  // Canaux d'interaction (center-left)
-  { id: "web", label: "Web", icon: "🌐", group: "channel", x: 28, y: 8 },
-  { id: "reseaux", label: "Réseaux\nSociaux", icon: "💬", group: "channel", x: 28, y: 22 },
-  { id: "emails", label: "Emails", icon: "📧", group: "channel", x: 28, y: 36 },
-  { id: "appels", label: "Appels", icon: "📞", group: "channel", x: 28, y: 50 },
-  { id: "terrain", label: "Visites\nTerrain", icon: "🏭", group: "channel", x: 28, y: 64 },
-  { id: "formelles", label: "Réclamations\nFormelles", icon: "📄", group: "channel", x: 28, y: 78 },
-  { id: "reunions", label: "Réunions\nClients", icon: "🤝", group: "channel", x: 28, y: 92 },
+  // Canaux d'interaction réels (entretiens VOC)
+  { id: "emails", label: "Emails", icon: "📧", group: "channel", x: 28, y: 8 },
+  { id: "telephone", label: "Téléphone", icon: "📞", group: "channel", x: 28, y: 20 },
+  { id: "google", label: "Google\nReviews", icon: "⭐", group: "channel", x: 28, y: 32 },
+  { id: "reseaux", label: "Facebook\nYouTube TikTok", icon: "💬", group: "channel", x: 28, y: 44 },
+  { id: "forums", label: "Forums\nOff-Road", icon: "🏁", group: "channel", x: 28, y: 56 },
+  { id: "terrain", label: "Visites\nTerrain / Dealers", icon: "🏭", group: "channel", x: 28, y: 68 },
+  { id: "formelles", label: "Réclamations\nFormelles / RMA", icon: "📄", group: "channel", x: 28, y: 80 },
+  { id: "sondage", label: "Sondage\nAnnuel", icon: "📊", group: "channel", x: 28, y: 92 },
 
-  // Boîtes noires de traitement (center)
-  { id: "ctq", label: "Définition\nCTQ", icon: "🎯", group: "process", x: 52, y: 20 },
-  { id: "kano", label: "Catégorisation\nKano", icon: "📊", group: "process", x: 52, y: 45 },
-  { id: "scoring", label: "Score\nComposite", icon: "⚡", group: "process", x: 52, y: 70 },
+  // Boîtes noires de traitement
+  { id: "ctq", label: "Définition\nCTQ", icon: "🎯", group: "process", x: 52, y: 18 },
+  { id: "kano", label: "Catégorisation\nKano", icon: "📊", group: "process", x: 52, y: 43 },
+  { id: "scoring", label: "Score Composite\nFréq × Sév × Kano", icon: "⚡", group: "process", x: 52, y: 68 },
 
-  // Actions (center-right)
+  // Actions CAPA
   { id: "corrective", label: "Actions\nCorrectives", icon: "🔴", group: "action", x: 75, y: 30 },
   { id: "preventive", label: "Actions\nPréventives", icon: "🟢", group: "action", x: 75, y: 60 },
 
-  // Sortie (right)
-  { id: "dashboard", label: "Dashboard\nVOC", icon: "📈", group: "output", x: 93, y: 45 },
+  // Sortie
+  { id: "dashboard", label: "Dashboard\nVOC ELKA", icon: "📈", group: "output", x: 93, y: 45 },
 ];
 
 const links: FlowLink[] = [
-  // Sources → Canaux
+  // Sources → Canaux (basé sur les vrais flux ELKA)
   { from: "plaintes", to: "emails", animated: true },
-  { from: "plaintes", to: "appels", animated: true },
+  { from: "plaintes", to: "telephone", animated: true },
   { from: "plaintes", to: "formelles", animated: true },
-  { from: "social", to: "reseaux", animated: true },
-  { from: "social", to: "web", animated: true },
+  { from: "avis", to: "google", animated: true },
+  { from: "avis", to: "reseaux", animated: true },
+  { from: "avis", to: "forums", animated: true },
   { from: "nc-produit", to: "formelles", animated: true },
-  { from: "nc-produit", to: "reunions", animated: true },
   { from: "nc-fournisseur", to: "emails", animated: true },
-  { from: "nc-fournisseur", to: "reunions", animated: true },
+  { from: "nc-fournisseur", to: "terrain", animated: true },
   { from: "reprises", to: "terrain", animated: true },
   { from: "reprises", to: "formelles", animated: true },
 
   // Canaux → Traitement
-  { from: "web", to: "ctq", animated: true },
-  { from: "reseaux", to: "ctq", animated: true },
   { from: "emails", to: "ctq", animated: true },
-  { from: "appels", to: "kano", animated: true },
-  { from: "terrain", to: "kano", animated: true },
+  { from: "telephone", to: "ctq", animated: true },
+  { from: "google", to: "kano", animated: true },
+  { from: "reseaux", to: "kano", animated: true },
+  { from: "forums", to: "kano", animated: true },
+  { from: "terrain", to: "ctq", animated: true },
   { from: "formelles", to: "scoring", animated: true },
-  { from: "reunions", to: "scoring", animated: true },
+  { from: "sondage", to: "kano", animated: true },
 
   // Traitement → Traitement
   { from: "ctq", to: "scoring", animated: true },
@@ -82,7 +84,7 @@ const links: FlowLink[] = [
   { from: "corrective", to: "dashboard", animated: true },
   { from: "preventive", to: "dashboard", animated: true },
 
-  // Feedback loops
+  // Boucles de rétroaction
   { from: "dashboard", to: "plaintes" },
   { from: "corrective", to: "reprises" },
 ];
@@ -103,7 +105,6 @@ const groupLabels = {
   output: "Tableau de Bord",
 };
 
-// Animated particle on a link
 function AnimatedParticle({ fromNode, toNode, delay }: { fromNode: FlowNode; toNode: FlowNode; delay: number }) {
   return (
     <motion.circle
@@ -130,7 +131,6 @@ export function EcosystemDiagram() {
   const [activeNode, setActiveNode] = useState<string | null>(null);
   const [pulseIndex, setPulseIndex] = useState(0);
 
-  // Cycle pulse through nodes for "living" feel
   useEffect(() => {
     const interval = setInterval(() => {
       setPulseIndex(prev => (prev + 1) % nodes.length);
@@ -140,7 +140,6 @@ export function EcosystemDiagram() {
 
   const getNode = (id: string) => nodes.find(n => n.id === id)!;
 
-  // Determine which links are highlighted
   const highlightedLinks = activeNode
     ? links.filter(l => l.from === activeNode || l.to === activeNode)
     : [];
@@ -151,11 +150,11 @@ export function EcosystemDiagram() {
   return (
     <div className="rounded-lg border bg-card p-4">
       <div className="flex items-center gap-2 mb-2">
-        <span className="text-xs font-mono text-primary uppercase tracking-widest">▸ Écosystème VOC Dynamique</span>
+        <span className="text-xs font-mono text-primary uppercase tracking-widest">▸ Écosystème VOC — ELKA Suspension</span>
         <span className="text-xs text-muted-foreground font-mono">— Flux Interactif Complet</span>
       </div>
 
-      {/* Legend */}
+      {/* Légende */}
       <div className="flex flex-wrap gap-3 mb-4">
         {(Object.keys(groupLabels) as Array<keyof typeof groupLabels>).map(g => (
           <div key={g} className="flex items-center gap-1.5">
@@ -165,14 +164,9 @@ export function EcosystemDiagram() {
         ))}
       </div>
 
-      {/* Diagram SVG + overlaid divs */}
+      {/* Diagramme */}
       <div className="relative w-full" style={{ paddingBottom: "55%" }}>
-        <svg
-          className="absolute inset-0 w-full h-full"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          {/* Links */}
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
           {links.map((link, i) => {
             const from = getNode(link.from);
             const to = getNode(link.to);
@@ -181,64 +175,40 @@ export function EcosystemDiagram() {
             return (
               <g key={i}>
                 <motion.line
-                  x1={`${from.x}%`}
-                  y1={`${from.y}%`}
-                  x2={`${to.x}%`}
-                  y2={`${to.y}%`}
-                  stroke={
-                    isFeedback
-                      ? "hsl(38 92% 55%)"
-                      : isHighlighted
-                      ? "hsl(174 72% 60%)"
-                      : "hsl(220 14% 25%)"
-                  }
+                  x1={`${from.x}%`} y1={`${from.y}%`}
+                  x2={`${to.x}%`} y2={`${to.y}%`}
+                  stroke={isFeedback ? "hsl(38 92% 55%)" : isHighlighted ? "hsl(174 72% 60%)" : "hsl(220 14% 25%)"}
                   strokeWidth={isHighlighted ? 0.4 : 0.2}
                   strokeDasharray={isFeedback ? "1 1" : undefined}
                   initial={{ pathLength: 0 }}
                   animate={{ pathLength: 1 }}
                   transition={{ duration: 1, delay: i * 0.03 }}
                 />
-                {/* Animated particles on forward links */}
-                {link.animated && (
-                  <AnimatedParticle fromNode={from} toNode={to} delay={i * 0.15} />
-                )}
+                {link.animated && <AnimatedParticle fromNode={from} toNode={to} delay={i * 0.15} />}
               </g>
             );
           })}
         </svg>
 
-        {/* Nodes */}
+        {/* Nœuds */}
         {nodes.map((node, i) => {
           const colors = groupColors[node.group];
           const isPulsing = i === pulseIndex;
           const dimmed = highlightedNodeIds && !highlightedNodeIds.has(node.id);
-
           return (
             <motion.div
               key={node.id}
-              className={`absolute cursor-pointer select-none`}
-              style={{
-                left: `${node.x}%`,
-                top: `${node.y}%`,
-                transform: "translate(-50%, -50%)",
-              }}
+              className="absolute cursor-pointer select-none"
+              style={{ left: `${node.x}%`, top: `${node.y}%`, transform: "translate(-50%, -50%)" }}
               initial={{ opacity: 0, scale: 0 }}
-              animate={{
-                opacity: dimmed ? 0.3 : 1,
-                scale: isPulsing && !activeNode ? 1.1 : 1,
-              }}
+              animate={{ opacity: dimmed ? 0.3 : 1, scale: isPulsing && !activeNode ? 1.1 : 1 }}
               transition={{ duration: 0.4, delay: i * 0.04 }}
               onMouseEnter={() => setActiveNode(node.id)}
               onMouseLeave={() => setActiveNode(null)}
               whileHover={{ scale: 1.15, zIndex: 50 }}
             >
               <div
-                className={`
-                  px-2 py-1.5 rounded border text-center
-                  ${colors.bg} ${colors.border}
-                  ${isPulsing && !activeNode ? "ring-1 ring-primary/30" : ""}
-                  backdrop-blur-sm transition-shadow
-                `}
+                className={`px-2 py-1.5 rounded border text-center ${colors.bg} ${colors.border} ${isPulsing && !activeNode ? "ring-1 ring-primary/30" : ""} backdrop-blur-sm transition-shadow`}
                 style={{ minWidth: "60px" }}
               >
                 <div className="text-sm leading-none mb-0.5">{node.icon}</div>
@@ -250,13 +220,8 @@ export function EcosystemDiagram() {
           );
         })}
 
-        {/* Feedback label */}
-        <motion.div
-          className="absolute bottom-1 right-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-        >
+        {/* Label boucles */}
+        <motion.div className="absolute bottom-1 right-2" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}>
           <div className="flex items-center gap-1.5">
             <span className="text-accent text-xs">↺</span>
             <span className="text-[8px] font-mono text-accent">Boucles de Rétroaction</span>
@@ -264,7 +229,7 @@ export function EcosystemDiagram() {
         </motion.div>
       </div>
 
-      {/* Active node info */}
+      {/* Info nœud actif */}
       <AnimatePresence>
         {activeNode && (
           <motion.div
@@ -281,8 +246,7 @@ export function EcosystemDiagram() {
                 </div>
                 <div className="text-[10px] font-mono text-muted-foreground mt-0.5">
                   Connexions : {links.filter(l => l.from === activeNode || l.to === activeNode).length} liens actifs
-                  {" • "}
-                  Groupe : {groupLabels[getNode(activeNode).group]}
+                  {" • "}Groupe : {groupLabels[getNode(activeNode).group]}
                 </div>
               </div>
             </div>
