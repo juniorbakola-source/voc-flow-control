@@ -86,8 +86,8 @@ const Index = () => {
 
         {/* Pied de page */}
         <footer className="border-t pt-4 pb-8 flex items-center justify-between text-[10px] font-mono text-muted-foreground">
-          <span>Système de Contrôle VOC v1.0 • World Class Manufacturing</span>
-          <span>Boucles de rétroaction : 3 actives • Gouvernance : Quotidien / Hebdo / Mensuel</span>
+          <span>ELKA Suspension — Système VOC v1.0 • World Class Manufacturing</span>
+          <span>Données : 559 plaintes • 1 095 inspections • 150 avis en ligne</span>
         </footer>
       </main>
     </div>
