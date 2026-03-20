@@ -12,14 +12,14 @@ export function IssueTable() {
   return (
     <div className="rounded-lg border bg-card p-4">
       <div className="flex items-center gap-2 mb-4">
-        <span className="text-xs font-mono text-primary uppercase tracking-widest">▸ Decision Layer</span>
-        <span className="text-xs text-muted-foreground font-mono">— Prioritized Issues (Freq × Sev × Kano)</span>
+        <span className="text-xs font-mono text-primary uppercase tracking-widest">▸ Couche Décision</span>
+        <span className="text-xs text-muted-foreground font-mono">— Problèmes Priorisés (Fréq × Sév × Kano)</span>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
             <tr className="border-b">
-              {["ID", "Issue", "Kano", "CTQ", "Score", "Dept"].map((h) => (
+              {["ID", "Problème", "Kano", "CTQ", "Score", "Dépt"].map((h) => (
                 <th key={h} className="text-left text-[10px] font-mono text-muted-foreground uppercase tracking-wider pb-2 pr-3">
                   {h}
                 </th>
@@ -33,7 +33,7 @@ export function IssueTable() {
                 <td className="py-2 pr-3 text-xs text-foreground max-w-[200px] truncate">{issue.title}</td>
                 <td className="py-2 pr-3">
                   <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${kanoBadge[issue.kano]}`}>
-                    {issue.kano.toUpperCase()}
+                    {issue.kano === "must-be" ? "OBLIGATOIRE" : issue.kano === "performance" ? "PERFORMANCE" : "ATTRACTIVE"}
                   </span>
                 </td>
                 <td className="py-2 pr-3 text-[10px] font-mono text-muted-foreground max-w-[150px] truncate">

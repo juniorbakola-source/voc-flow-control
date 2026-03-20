@@ -14,17 +14,17 @@ export function HeatmapTable() {
   return (
     <div className="rounded-lg border bg-card p-4">
       <div className="flex items-center gap-2 mb-4">
-        <span className="text-xs font-mono text-primary uppercase tracking-widest">▸ Dept × Kano Heatmap</span>
+        <span className="text-xs font-mono text-primary uppercase tracking-widest">▸ Carte Thermique Dépt × Kano</span>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
             <tr className="border-b">
               <th className="text-left text-[10px] font-mono text-muted-foreground uppercase tracking-wider pb-2 pr-4">
-                Department
+                Département
               </th>
               <th className="text-center text-[10px] font-mono text-muted-foreground uppercase tracking-wider pb-2 px-2">
-                Must-Be
+                Obligatoire
               </th>
               <th className="text-center text-[10px] font-mono text-muted-foreground uppercase tracking-wider pb-2 px-2">
                 Performance

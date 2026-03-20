@@ -18,8 +18,8 @@ export function InputChannels() {
   return (
     <div className="rounded-lg border bg-card p-4">
       <div className="flex items-center gap-2 mb-4">
-        <span className="text-xs font-mono text-primary uppercase tracking-widest">▸ Input Layer</span>
-        <span className="text-xs text-muted-foreground font-mono">— VOC Sources</span>
+        <span className="text-xs font-mono text-primary uppercase tracking-widest">▸ Couche Entrée</span>
+        <span className="text-xs text-muted-foreground font-mono">— Sources VOC</span>
       </div>
       <div className="space-y-2">
         {vocInputs.map((input, i) => (
@@ -49,8 +49,8 @@ export function InputChannels() {
         ))}
       </div>
       <div className="mt-3 pt-3 border-t flex justify-between text-xs font-mono text-muted-foreground">
-        <span>Total signals: {vocInputs.reduce((a, b) => a + b.count, 0)}</span>
-        <span className="text-primary">System: ONLINE</span>
+        <span>Total signaux : {vocInputs.reduce((a, b) => a + b.count, 0)}</span>
+        <span className="text-primary">Système : EN LIGNE</span>
       </div>
     </div>
   );

@@ -16,8 +16,7 @@ const statusDot = {
 
 export function KPICard({ data, index }: { data: KPIData; index: number }) {
   const isPositiveTrend = data.trend > 0;
-  // For metrics where lower is better (like defect rate, response time)
-  const lowerIsBetter = data.unit === "ppm" || data.unit === "days";
+  const lowerIsBetter = data.unit === "ppm" || data.unit === "jours";
   const trendIsGood = lowerIsBetter ? !isPositiveTrend : isPositiveTrend;
 
   return (
@@ -36,14 +35,14 @@ export function KPICard({ data, index }: { data: KPIData; index: number }) {
 
       <div className="flex items-end gap-2">
         <span className="text-2xl font-mono font-bold text-foreground">
-          {data.value.toLocaleString()}
+          {data.value.toLocaleString("fr-FR")}
         </span>
         <span className="text-xs text-muted-foreground mb-1">{data.unit}</span>
       </div>
 
       <div className="flex items-center justify-between mt-2">
         <span className="text-xs text-muted-foreground font-mono">
-          Target: {data.target.toLocaleString()}{data.unit}
+          Cible: {data.target.toLocaleString("fr-FR")}{data.unit}
         </span>
         <div className={`flex items-center gap-1 text-xs font-mono ${trendIsGood ? "text-success" : "text-destructive"}`}>
           {isPositiveTrend ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
@@ -51,7 +50,6 @@ export function KPICard({ data, index }: { data: KPIData; index: number }) {
         </div>
       </div>
 
-      {/* Progress bar */}
       <div className="mt-3 h-1 w-full rounded-full bg-secondary">
         <div
           className={`h-full rounded-full transition-all ${
@@ -59,7 +57,7 @@ export function KPICard({ data, index }: { data: KPIData; index: number }) {
           }`}
           style={{
             width: `${Math.min(
-              (data.unit === "ppm" || data.unit === "days"
+              (data.unit === "ppm" || data.unit === "jours"
                 ? (data.target / data.value) * 100
                 : (data.value / data.target) * 100),
               100

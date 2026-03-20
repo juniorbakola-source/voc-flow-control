@@ -2,10 +2,10 @@ import { motion } from "framer-motion";
 import { actions } from "@/data/vocData";
 
 const statusStyles = {
-  open: { bg: "bg-info/10 border-info/30", text: "text-info", label: "OPEN" },
-  "in-progress": { bg: "bg-primary/10 border-primary/30", text: "text-primary", label: "IN PROG" },
-  completed: { bg: "bg-success/10 border-success/30", text: "text-success", label: "DONE" },
-  overdue: { bg: "bg-destructive/10 border-destructive/30", text: "text-destructive", label: "OVERDUE" },
+  open: { bg: "bg-info/10 border-info/30", text: "text-info", label: "OUVERT" },
+  "in-progress": { bg: "bg-primary/10 border-primary/30", text: "text-primary", label: "EN COURS" },
+  completed: { bg: "bg-success/10 border-success/30", text: "text-success", label: "TERMINÉ" },
+  overdue: { bg: "bg-destructive/10 border-destructive/30", text: "text-destructive", label: "EN RETARD" },
 };
 
 const typeStyles = {
@@ -18,8 +18,8 @@ export function ActionTracker() {
     <div className="rounded-lg border bg-card p-4">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-mono text-primary uppercase tracking-widest">▸ Action Layer</span>
-          <span className="text-xs text-muted-foreground font-mono">— Corrective & Preventive</span>
+          <span className="text-xs font-mono text-primary uppercase tracking-widest">▸ Couche Actions</span>
+          <span className="text-xs text-muted-foreground font-mono">— Correctives & Préventives</span>
         </div>
         <div className="flex gap-2 text-xs font-mono">
           <span className="text-warning">C: {actions.filter(a => a.type === "corrective").length}</span>
@@ -54,7 +54,7 @@ export function ActionTracker() {
                 </div>
               </div>
               <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">
-                <span>Due: {action.dueDate}</span>
+                <span>Échéance : {action.dueDate}</span>
                 {action.effectiveness !== null && (
                   <span className="text-success">Eff: {action.effectiveness}%</span>
                 )}
