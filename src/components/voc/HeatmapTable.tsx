@@ -31,6 +31,12 @@ const cellKeyToKano: Record<CellKey, KanoCategory> = {
   attractive: "attractive",
 };
 
+const kanoLabels: Record<CellKey, string> = {
+  mustBe: "Obligatoire",
+  performance: "Performance",
+  attractive: "Attractive",
+};
+
 function getRelatedIssues(department: string, kano: KanoCategory) {
   return vocIssues.filter(
     (issue) =>
@@ -44,10 +50,10 @@ export function HeatmapTable() {
   const [hoveredCell, setHoveredCell] = useState<string | null>(null);
   const [selectedCell, setSelectedCell] = useState<{ dept: string; col: CellKey } | null>(null);
 
-  const columns: { key: CellKey; label: string }[] = [
-    { key: "mustBe", label: "Obligatoire" },
-    { key: "performance", label: "Performance" },
-    { key: "attractive", label: "Attractive" },
+  const columns: { key: CellKey; label: string; icon: string }[] = [
+    { key: "mustBe", label: "Obligatoire", icon: "🔴" },
+    { key: "performance", label: "Performance", icon: "🟡" },
+    { key: "attractive", label: "Attractive", icon: "🟢" },
   ];
 
   const selectedIssues = selectedCell
@@ -69,21 +75,21 @@ export function HeatmapTable() {
     const isSelected = selectedCell?.dept === row.department && selectedCell?.col === colKey;
 
     return (
-      <td className="py-2 px-2" key={colKey}>
+      <td className="py-1.5 px-1.5 sm:px-2" key={colKey}>
         <motion.div
-          className={`relative text-center text-xs font-mono font-bold rounded-md px-3 py-2 border cursor-pointer overflow-hidden ${getIntensityClasses(value, max)} ${isSelected ? "ring-2 ring-accent ring-offset-1 ring-offset-background" : ""}`}
+          className={`relative text-center text-xs font-mono font-bold rounded-md px-2 py-1.5 sm:px-3 sm:py-2 border cursor-pointer overflow-hidden transition-shadow ${getIntensityClasses(value, max)} ${isSelected ? "ring-2 ring-accent ring-offset-1 ring-offset-background glow-accent" : ""}`}
           onHoverStart={() => setHoveredCell(cellId)}
           onHoverEnd={() => setHoveredCell(null)}
           onClick={(e) => handleCellClick(row.department, colKey, e)}
           animate={{
-            scale: isHovered ? 1.12 : isSelected ? 1.06 : 1,
-            y: isHovered ? -2 : 0,
+            scale: isHovered ? 1.08 : isSelected ? 1.04 : 1,
+            y: isHovered ? -1 : 0,
           }}
-          transition={{ type: "spring", stiffness: 400, damping: 20 }}
-          whileTap={{ scale: 0.95 }}
+          transition={{ type: "spring", stiffness: 400, damping: 22 }}
+          whileTap={{ scale: 0.96 }}
         >
           <motion.div
-            className={`absolute bottom-0 left-0 h-[3px] rounded-full ${getBarColor(value, max)}`}
+            className={`absolute bottom-0 left-0 h-[2px] rounded-full ${getBarColor(value, max)}`}
             initial={{ width: 0 }}
             animate={{ width: `${getBarWidth(value, max)}%` }}
             transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
@@ -93,7 +99,7 @@ export function HeatmapTable() {
               <motion.div
                 className="absolute inset-0 rounded-md border-2 border-current"
                 initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: [0.5, 0], scale: 1.15 }}
+                animate={{ opacity: [0.4, 0], scale: 1.1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.6, repeat: Infinity }}
               />
@@ -107,136 +113,170 @@ export function HeatmapTable() {
 
   return (
     <div className="rounded-lg border bg-card p-4">
-      <div className="flex items-center gap-2 mb-4">
-        <span className="text-xs font-mono text-primary uppercase tracking-widest">
-          ▸ Carte Thermique Dépt × Kano
-        </span>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-mono text-primary uppercase tracking-widest">
+            ▸ Carte Thermique Dépt × Kano
+          </span>
+          <span className="text-[10px] font-mono text-muted-foreground hidden sm:inline">
+            — Cliquez sur une case pour voir les problèmes
+          </span>
+        </div>
         {selectedCell && (
           <button
             onClick={() => setSelectedCell(null)}
-            className="ml-auto text-[10px] font-mono text-muted-foreground hover:text-foreground transition-colors"
+            className="text-[10px] font-mono text-muted-foreground hover:text-foreground transition-colors border border-border/50 rounded px-2 py-0.5 hover:bg-secondary/30"
           >
             ✕ Fermer
           </button>
         )}
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b">
-              <th className="text-left text-[10px] font-mono text-muted-foreground uppercase tracking-wider pb-2 pr-4">
-                Département
-              </th>
-              {columns.map((col) => (
-                <th
-                  key={col.key}
-                  className="text-center text-[10px] font-mono text-muted-foreground uppercase tracking-wider pb-2 px-2"
-                >
-                  {col.label}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {heatmapData.map((row, i) => (
-              <motion.tr
-                key={row.department}
-                className={`border-b border-border/50 transition-colors ${
-                  selectedCell?.dept === row.department ? "bg-primary/5" : "hover:bg-secondary/20"
-                }`}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.06, duration: 0.3 }}
-              >
-                <td className="py-2 pr-4 text-xs font-mono text-foreground">{row.department}</td>
-                {renderCell(row, "mustBe", row.mustBe)}
-                {renderCell(row, "performance", row.performance)}
-                {renderCell(row, "attractive", row.attractive)}
-              </motion.tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
 
-      {/* Detail panel for selected cell */}
-      <AnimatePresence>
-        {selectedCell && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden"
-          >
-            <div className="mt-4 pt-3 border-t border-border/50">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {/* Table */}
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b">
+                <th className="text-left text-[10px] font-mono text-muted-foreground uppercase tracking-wider pb-2 pr-3">
+                  Département
+                </th>
+                {columns.map((col) => (
+                  <th
+                    key={col.key}
+                    className="text-center text-[10px] font-mono text-muted-foreground uppercase tracking-wider pb-2 px-1.5"
+                  >
+                    <span className="hidden sm:inline">{col.icon} </span>{col.label}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {heatmapData.map((row, i) => (
+                <motion.tr
+                  key={row.department}
+                  className={`border-b border-border/50 transition-colors ${
+                    selectedCell?.dept === row.department
+                      ? "bg-primary/5"
+                      : "hover:bg-secondary/20"
+                  }`}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.04, duration: 0.25 }}
+                >
+                  <td className="py-1.5 pr-3 text-xs font-mono text-foreground whitespace-nowrap">
+                    {row.department}
+                  </td>
+                  {renderCell(row, "mustBe", row.mustBe)}
+                  {renderCell(row, "performance", row.performance)}
+                  {renderCell(row, "attractive", row.attractive)}
+                </motion.tr>
+              ))}
+            </tbody>
+          </table>
+
+          {/* Legend */}
+          <div className="flex items-center gap-3 mt-3 pt-2 border-t border-border/50">
+            <span className="text-[10px] font-mono text-muted-foreground">Intensité :</span>
+            <div className="flex items-center gap-1">
+              <div className="w-2.5 h-2.5 rounded bg-primary/20 border border-primary/50" />
+              <span className="text-[10px] font-mono text-muted-foreground">Faible</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <div className="w-2.5 h-2.5 rounded bg-warning/30 border border-warning/50" />
+              <span className="text-[10px] font-mono text-muted-foreground">Moyen</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <div className="w-2.5 h-2.5 rounded bg-destructive/30 border border-destructive/50" />
+              <span className="text-[10px] font-mono text-muted-foreground">Élevé</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Detail panel */}
+        <AnimatePresence mode="wait">
+          {selectedCell ? (
+            <motion.div
+              key={`${selectedCell.dept}-${selectedCell.col}`}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.25 }}
+              className="rounded-lg border border-border/50 bg-secondary/10 p-4 flex flex-col"
+            >
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-[10px] font-mono text-accent uppercase tracking-wider">
+                <span className="text-[10px] font-mono text-accent uppercase tracking-wider font-bold">
                   ▸ Problèmes liés
                 </span>
-                <span className="text-[10px] font-mono text-muted-foreground">
-                  — {selectedCell.dept} ×{" "}
-                  {columns.find((c) => c.key === selectedCell.col)?.label}
+              </div>
+              <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border/30">
+                <span className="text-xs font-mono text-foreground font-bold">{selectedCell.dept}</span>
+                <span className="text-[10px] font-mono text-muted-foreground">×</span>
+                <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${
+                  selectedCell.col === "mustBe"
+                    ? "bg-destructive/10 text-destructive border-destructive/30"
+                    : selectedCell.col === "performance"
+                    ? "bg-warning/10 text-warning border-warning/30"
+                    : "bg-primary/10 text-primary border-primary/30"
+                }`}>
+                  {kanoLabels[selectedCell.col]}
                 </span>
               </div>
 
               {selectedIssues.length > 0 ? (
-                <div className="space-y-2">
+                <div className="space-y-2 flex-1 overflow-y-auto max-h-[300px]">
                   {selectedIssues.map((issue, idx) => (
                     <motion.div
                       key={issue.id}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: idx * 0.05 }}
-                      className="flex items-start gap-3 rounded-md border border-border/50 bg-secondary/10 px-3 py-2"
+                      className="rounded-md border border-border/50 bg-card px-3 py-2.5 space-y-1"
                     >
-                      <span className="text-[10px] font-mono text-muted-foreground mt-0.5 shrink-0">
-                        {issue.id}
-                      </span>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-xs text-foreground truncate">{issue.title}</p>
-                        <p className="text-[10px] font-mono text-muted-foreground mt-0.5">
-                          CTQ: {issue.ctq}
-                        </p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-mono text-muted-foreground">{issue.id}</span>
+                        <span className="text-xs font-mono font-bold text-accent">{issue.compositeScore}</span>
                       </div>
-                      <div className="flex items-center gap-2 shrink-0">
+                      <p className="text-xs text-foreground leading-snug">{issue.title}</p>
+                      <p className="text-[10px] font-mono text-muted-foreground">CTQ: {issue.ctq}</p>
+                      <div className="flex items-center gap-3 pt-1">
                         <span className="text-[10px] font-mono text-muted-foreground">
-                          Fréq: {issue.frequency}
+                          Fréq: <span className="text-foreground">{issue.frequency}</span>
                         </span>
                         <span className="text-[10px] font-mono text-muted-foreground">
-                          Sév: {issue.severity}
+                          Sév: <span className="text-foreground">{issue.severity}</span>
                         </span>
-                        <span className="text-xs font-mono font-bold text-accent">
-                          {issue.compositeScore}
+                        <span className="text-[10px] font-mono text-muted-foreground">
+                          Produit: <span className="text-foreground">{issue.product}</span>
                         </span>
                       </div>
                     </motion.div>
                   ))}
                 </div>
               ) : (
-                <p className="text-xs font-mono text-muted-foreground italic">
-                  Aucun problème enregistré pour cette combinaison.
-                </p>
+                <div className="flex-1 flex items-center justify-center">
+                  <p className="text-xs font-mono text-muted-foreground italic text-center py-8">
+                    Aucun problème enregistré pour cette combinaison.
+                  </p>
+                </div>
               )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Legend */}
-      <div className="flex items-center gap-4 mt-4 pt-3 border-t border-border/50">
-        <span className="text-[10px] font-mono text-muted-foreground">Intensité :</span>
-        <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded bg-primary/20 border border-primary/50" />
-          <span className="text-[10px] font-mono text-muted-foreground">Faible</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded bg-warning/30 border border-warning/50" />
-          <span className="text-[10px] font-mono text-muted-foreground">Moyen</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded bg-destructive/30 border border-destructive/50" />
-          <span className="text-[10px] font-mono text-muted-foreground">Élevé</span>
-        </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="rounded-lg border border-dashed border-border/50 bg-secondary/5 p-4 flex items-center justify-center"
+            >
+              <div className="text-center space-y-2">
+                <span className="text-2xl">🔍</span>
+                <p className="text-xs font-mono text-muted-foreground">
+                  Cliquez sur une case pour explorer<br />les problèmes associés
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

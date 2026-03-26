@@ -66,9 +66,8 @@ const Index = () => {
 
         {/* Grille Principale */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="space-y-6">
+          <div>
             <InputChannels />
-            <HeatmapTable />
           </div>
           <div className="space-y-6">
             <ParetoChart />
@@ -78,6 +77,11 @@ const Index = () => {
             <ActionTracker />
           </div>
         </div>
+
+        {/* Carte Thermique — pleine largeur */}
+        <motion.section initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+          <HeatmapTable />
+        </motion.section>
 
         {/* Table des Problèmes */}
         <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
