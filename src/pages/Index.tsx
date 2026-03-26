@@ -9,6 +9,7 @@ import { SystemFlow } from "@/components/voc/SystemFlow";
 import { HeatmapTable } from "@/components/voc/HeatmapTable";
 import { IssueTable } from "@/components/voc/IssueTable";
 import { EcosystemDiagram } from "@/components/voc/EcosystemDiagram";
+import { QualityMetrics } from "@/components/voc/QualityMetrics";
 
 const Index = () => {
   return (
@@ -65,7 +66,7 @@ const Index = () => {
         </motion.section>
 
         {/* Grille Principale */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <div>
             <InputChannels />
           </div>
@@ -75,6 +76,9 @@ const Index = () => {
           </div>
           <div>
             <ActionTracker />
+          </div>
+          <div>
+            <QualityMetrics />
           </div>
         </div>
 
