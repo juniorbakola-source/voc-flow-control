@@ -26,7 +26,7 @@ export function ActionTracker() {
           <span className="text-primary">P: {actions.filter(a => a.type === "preventive").length}</span>
         </div>
       </div>
-      <div className="space-y-2 max-h-[220px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-muted-foreground/20 scrollbar-track-transparent">
+      <div className="space-y-2 flex-1 overflow-y-auto pr-1">
         {actions.map((action, i) => {
           const style = statusStyles[action.status];
           return (
