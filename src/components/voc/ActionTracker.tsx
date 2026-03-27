@@ -15,7 +15,7 @@ const typeStyles = {
 
 export function ActionTracker() {
   return (
-    <div className="rounded-lg border bg-card p-4">
+    <div className="rounded-lg border bg-card p-4 h-full flex flex-col">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <span className="text-xs font-mono text-primary uppercase tracking-widest">▸ Couche Actions</span>
