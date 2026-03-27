@@ -42,54 +42,44 @@ const Index = () => {
         </div>
       </header>
 
-      <main className="container py-6 space-y-6">
+      <main className="container py-4 space-y-4">
         {/* KPI */}
         <section>
-          <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-3">
+          <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-2">
             ▸ Couche Sortie — Indicateurs Clés de Performance
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
             {kpis.map((kpi, i) => (
               <KPICard key={kpi.label} data={kpi} index={i} />
             ))}
           </div>
         </section>
 
-        {/* Écosystème VOC Interactif */}
-        <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
-          <EcosystemDiagram />
-        </motion.section>
+        {/* Écosystème & Architecture — côte à côte */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
+            <EcosystemDiagram />
+          </motion.div>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+            <SystemFlow />
+          </motion.div>
+        </div>
 
-        {/* Architecture Système */}
-        <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
-          <SystemFlow />
-        </motion.section>
-
-        {/* Couche Analyse — Canaux & Pareto */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div>
-            <InputChannels />
-          </div>
-          <div>
-            <ParetoChart />
-          </div>
-          <div>
-            <TrendChart />
-          </div>
+        {/* Couche Analyse — Canaux, Pareto, Tendance */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <InputChannels />
+          <ParetoChart />
+          <TrendChart />
         </div>
 
         {/* Couche Opérationnelle — Actions & Métriques */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <ActionTracker />
-          </div>
-          <div>
-            <QualityMetrics />
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <ActionTracker />
+          <QualityMetrics />
         </div>
 
-        {/* Carte Thermique — pleine largeur */}
-        <motion.section initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+        {/* Carte Thermique */}
+        <motion.section initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
           <HeatmapTable />
         </motion.section>
 
