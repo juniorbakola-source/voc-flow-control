@@ -8,7 +8,7 @@ export function TrendChart() {
         <span className="text-xs font-mono text-primary uppercase tracking-widest">▸ Analyse Tendance</span>
         <span className="text-xs text-muted-foreground font-mono">— Oct 2025 – Mar 2026</span>
       </div>
-      <div className="h-[200px]">
+      <div className="h-[280px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={trendData} margin={{ top: 5, right: 10, left: -10, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(220 14% 18%)" />
