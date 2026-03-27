@@ -66,18 +66,18 @@ const Index = () => {
         </motion.section>
 
         {/* Grille Principale */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
-          <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 items-start">
+          <div className="md:col-span-1 lg:col-span-3">
             <InputChannels />
           </div>
-          <div className="space-y-6">
+          <div className="md:col-span-2 lg:col-span-4 space-y-6">
             <ParetoChart />
             <TrendChart />
           </div>
-          <div className="flex">
+          <div className="md:col-span-1 lg:col-span-3">
             <ActionTracker />
           </div>
-          <div>
+          <div className="md:col-span-1 lg:col-span-2">
             <QualityMetrics />
           </div>
         </div>
