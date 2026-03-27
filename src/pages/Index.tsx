@@ -66,7 +66,7 @@ const Index = () => {
         </motion.section>
 
         {/* Grille Principale */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-stretch">
           <div>
             <InputChannels />
           </div>
@@ -74,7 +74,7 @@ const Index = () => {
             <ParetoChart />
             <TrendChart />
           </div>
-          <div>
+          <div className="flex">
             <ActionTracker />
           </div>
           <div>
