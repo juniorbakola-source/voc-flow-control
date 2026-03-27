@@ -66,7 +66,7 @@ const Index = () => {
         </motion.section>
 
         {/* Grille Principale */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
           <div>
             <InputChannels />
           </div>
