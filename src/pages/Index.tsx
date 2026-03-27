@@ -65,16 +65,22 @@ const Index = () => {
           <SystemFlow />
         </motion.section>
 
-        {/* Grille Principale */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+        {/* Couche Analyse — Canaux & Pareto */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div>
             <InputChannels />
           </div>
-          <div className="space-y-6">
+          <div>
             <ParetoChart />
+          </div>
+          <div>
             <TrendChart />
           </div>
-          <div className="flex">
+        </div>
+
+        {/* Couche Opérationnelle — Actions & Métriques */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
             <ActionTracker />
           </div>
           <div>
