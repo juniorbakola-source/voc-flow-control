@@ -14,7 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      cost_non_quality: {
+        Row: {
+          currency: string
+          id: string
+          target: number
+          updated_at: string
+          value: number
+        }
+        Insert: {
+          currency?: string
+          id?: string
+          target?: number
+          updated_at?: string
+          value?: number
+        }
+        Update: {
+          currency?: string
+          id?: string
+          target?: number
+          updated_at?: string
+          value?: number
+        }
+        Relationships: []
+      }
+      deliveries: {
+        Row: {
+          created_at: string
+          customer_name: string | null
+          delivery_date: string | null
+          id: string
+          is_order_error: boolean
+          notes: string | null
+          order_date: string
+          order_number: string
+          product: string | null
+          ship_date: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          customer_name?: string | null
+          delivery_date?: string | null
+          id?: string
+          is_order_error?: boolean
+          notes?: string | null
+          order_date: string
+          order_number: string
+          product?: string | null
+          ship_date?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          customer_name?: string | null
+          delivery_date?: string | null
+          id?: string
+          is_order_error?: boolean
+          notes?: string | null
+          order_date?: string
+          order_number?: string
+          product?: string | null
+          ship_date?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
