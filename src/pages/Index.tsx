@@ -11,8 +11,13 @@ import { IssueTable } from "@/components/voc/IssueTable";
 import { EcosystemDiagram } from "@/components/voc/EcosystemDiagram";
 import { QualityMetrics } from "@/components/voc/QualityMetrics";
 import { SourcesMethodology } from "@/components/voc/SourcesMethodology";
+import { DataManagement } from "@/components/voc/DataManagement";
+import { useLiveKPIs } from "@/hooks/useLiveKPIs";
 
 const Index = () => {
+  const { data: liveKpis } = useLiveKPIs();
+  const displayKpis = liveKpis || kpis;
+
   return (
     <div className="min-h-screen bg-background grid-pattern">
       {/* En-tête */}
@@ -50,7 +55,7 @@ const Index = () => {
             ▸ Couche Sortie — Indicateurs Clés de Performance
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-            {kpis.map((kpi, i) => (
+            {displayKpis.map((kpi, i) => (
               <KPICard key={kpi.label} data={kpi} index={i} />
             ))}
           </div>
@@ -91,6 +96,11 @@ const Index = () => {
         {/* Table des Problèmes */}
         <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
           <IssueTable />
+        </motion.section>
+
+        {/* Gestion des Données */}
+        <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.55 }}>
+          <DataManagement />
         </motion.section>
 
         {/* Sources & Méthodologie */}
