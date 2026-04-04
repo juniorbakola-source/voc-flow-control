@@ -10,6 +10,7 @@ import { HeatmapTable } from "@/components/voc/HeatmapTable";
 import { IssueTable } from "@/components/voc/IssueTable";
 import { EcosystemDiagram } from "@/components/voc/EcosystemDiagram";
 import { QualityMetrics } from "@/components/voc/QualityMetrics";
+import { SourcesMethodology } from "@/components/voc/SourcesMethodology";
 
 const Index = () => {
   return (
@@ -90,6 +91,11 @@ const Index = () => {
         {/* Table des Problèmes */}
         <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
           <IssueTable />
+        </motion.section>
+
+        {/* Sources & Méthodologie */}
+        <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
+          <SourcesMethodology />
         </motion.section>
 
         {/* Pied de page */}
