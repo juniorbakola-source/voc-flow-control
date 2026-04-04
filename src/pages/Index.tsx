@@ -15,6 +15,9 @@ import { DataManagement } from "@/components/voc/DataManagement";
 import { useLiveKPIs } from "@/hooks/useLiveKPIs";
 
 const Index = () => {
+  const { data: liveKpis } = useLiveKPIs();
+  const displayKpis = liveKpis || kpis;
+
   return (
     <div className="min-h-screen bg-background grid-pattern">
       {/* En-tête */}
