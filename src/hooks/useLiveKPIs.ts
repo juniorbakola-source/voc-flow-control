@@ -18,6 +18,21 @@ export function useLiveKPIs() {
         .limit(1)
         .single();
 
+      // Fetch complaints from DB
+      const { count: totalComplaints } = await supabase
+        .from("complaints")
+        .select("*", { count: "exact", head: true });
+
+      const { count: closedComplaints } = await supabase
+        .from("complaints")
+        .select("*", { count: "exact", head: true })
+        .eq("status", "closed");
+
+      const { count: orderErrorComplaints } = await supabase
+        .from("complaints")
+        .select("*", { count: "exact", head: true })
+        .eq("category", "erreur_commande");
+
       const shipped = (deliveries || []).filter((d) => d.status === "delivered" || d.delivery_date);
       const withDates = shipped.filter((d) => d.order_date && d.delivery_date);
 
@@ -32,8 +47,13 @@ export function useLiveKPIs() {
           : 0;
 
       const totalShipped = shipped.length || 1;
-      const errorCount = (deliveries || []).filter((d) => d.is_order_error).length;
-      const accuracy = ((totalShipped - errorCount) / totalShipped) * 100;
+      // Use DB complaint count for order errors, fallback to delivery flag count
+      const errorCount = orderErrorComplaints ?? (deliveries || []).filter((d) => d.is_order_error).length;
+      const accuracy = totalShipped > 0 ? ((totalShipped - errorCount) / totalShipped) * 100 : 82;
+
+      const complaintTotal = totalComplaints ?? 559;
+      const complaintClosed = closedComplaints ?? 0;
+      const closedRate = complaintTotal > 0 ? (complaintClosed / complaintTotal) * 100 : 0;
 
       const costValue = costData?.value ?? 45000;
       const costTarget = costData?.target ?? 20000;
@@ -64,11 +84,11 @@ export function useLiveKPIs() {
         },
         {
           label: "Taux Plaintes Fermées",
-          value: 100,
+          value: Math.round(closedRate * 10) / 10,
           target: 100,
           unit: "%",
           trend: 0,
-          status: "on-track" as const,
+          status: getStatus(Math.round(closedRate * 10) / 10 || 0, 100, false),
         },
         {
           label: "Délai Livraison",
