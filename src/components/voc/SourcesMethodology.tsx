@@ -36,6 +36,18 @@ const sections: Section[] = [
     ],
   },
   {
+    title: "Indicateurs Clés de Performance (Couche Sortie)",
+    icon: "🎯",
+    items: [
+      { label: "Fiabilité (PPM)", detail: "PPM Interne = (Unités NC inspection finale / Unités produites) × 1 000 000\nValeur actuelle : 137 900 PPM | Cible : ≤ 10 000 PPM\nSource : inspections produit fini (MES). Reflète le taux de non-conformité en sortie de ligne." },
+      { label: "Satisfaction Client (NPS)", detail: "Score moyen pondéré des avis en ligne (échelle 1-5).\nNPS estimé = % Promoteurs (4-5) − % Détracteurs (1-2)\nValeur actuelle : 4.0/5 | Cible : ≥ 4.5/5\nSource : avis Google, forums spécialisés, réseaux sociaux (n=150)." },
+      { label: "Taux de Plaintes Fermées", detail: "Taux = (Plaintes clôturées / Plaintes totales reçues) × 100\nValeur actuelle : 100% | Cible : 100%\nSource : CRM interne. Mesure la capacité à résoudre et clôturer les réclamations clients dans les délais." },
+      { label: "Délai Livraison", detail: "Délai moyen entre la confirmation de commande et la réception client (jours ouvrables).\nValeur actuelle : 12 jours | Cible : ≤ 7 jours\nSource : ERP / module logistique. Inclut préparation, expédition et transit." },
+      { label: "Exactitude Commande", detail: "Taux = (Commandes livrées conformes / Commandes totales expédiées) × 100\nValeur actuelle : 82% | Cible : ≥ 95%\nSource : CRM + retours clients. Inclut erreurs de configuration, BOM incorrect, mauvaise référence." },
+      { label: "Coût de Non-Qualité (COPQ)", detail: "COPQ = Coûts internes (rebuts, reprises, tri) + Coûts externes (retours, garanties, pénalités)\nValeur actuelle : 45 000 $/mois | Cible : ≤ 20 000 $/mois\nSource : comptabilité analytique qualité. Agrège les coûts directs liés aux défaillances qualité." },
+    ],
+  },
+  {
     title: "Hypothèses & Limites",
     icon: "⚠️",
     items: [
