@@ -55,7 +55,7 @@ const Index = () => {
             ▸ Couche Sortie — Indicateurs Clés de Performance
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-            {kpis.map((kpi, i) => (
+            {displayKpis.map((kpi, i) => (
               <KPICard key={kpi.label} data={kpi} index={i} />
             ))}
           </div>
