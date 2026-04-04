@@ -11,6 +11,8 @@ import { IssueTable } from "@/components/voc/IssueTable";
 import { EcosystemDiagram } from "@/components/voc/EcosystemDiagram";
 import { QualityMetrics } from "@/components/voc/QualityMetrics";
 import { SourcesMethodology } from "@/components/voc/SourcesMethodology";
+import { DataManagement } from "@/components/voc/DataManagement";
+import { useLiveKPIs } from "@/hooks/useLiveKPIs";
 
 const Index = () => {
   return (
