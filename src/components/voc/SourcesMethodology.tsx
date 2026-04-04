@@ -50,21 +50,27 @@ const sections: Section[] = [
 ];
 
 export const SourcesMethodology = () => {
-  const [openSections, setOpenSections] = useState<Record<number, boolean>>({ 0: true });
+  const [mainOpen, setMainOpen] = useState(false);
+  const [openSections, setOpenSections] = useState<Record<number, boolean>>({});
 
   const toggle = (i: number) =>
     setOpenSections((prev) => ({ ...prev, [i]: !prev[i] }));
 
   return (
-    <Card className="border-border/50 bg-card/80 backdrop-blur-sm">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-xs font-mono uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-          <span className="text-primary">📖</span> Sources, Méthodologie & Hypothèses
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-2">
-        {sections.map((section, i) => (
-          <Collapsible key={i} open={openSections[i]} onOpenChange={() => toggle(i)}>
+    <Collapsible open={mainOpen} onOpenChange={setMainOpen}>
+      <Card className="border-border/50 bg-card/80 backdrop-blur-sm">
+        <CollapsibleTrigger className="w-full text-left">
+          <CardHeader className="pb-3 flex flex-row items-center justify-between cursor-pointer hover:bg-muted/30 transition-colors rounded-t-lg">
+            <CardTitle className="text-xs font-mono uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+              <span className="text-primary">📖</span> Sources, Méthodologie & Hypothèses
+            </CardTitle>
+            <motion.span animate={{ rotate: mainOpen ? 90 : 0 }} className="text-muted-foreground text-xs">▸</motion.span>
+          </CardHeader>
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <CardContent className="space-y-2 pt-0">
+            {sections.map((section, i) => (
+              <Collapsible key={i} open={openSections[i]} onOpenChange={() => toggle(i)}>
             <CollapsibleTrigger className="w-full flex items-center gap-2 px-3 py-2 rounded-md bg-muted/30 hover:bg-muted/60 transition-colors text-left">
               <span>{section.icon}</span>
               <span className="text-xs font-mono font-semibold text-foreground flex-1">
