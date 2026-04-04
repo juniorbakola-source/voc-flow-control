@@ -84,11 +84,11 @@ export function useLiveKPIs() {
         },
         {
           label: "Taux Plaintes Fermées",
-          value: 100,
+          value: Math.round(closedRate * 10) / 10,
           target: 100,
           unit: "%",
           trend: 0,
-          status: "on-track" as const,
+          status: getStatus(Math.round(closedRate * 10) / 10 || 0, 100, false),
         },
         {
           label: "Délai Livraison",
