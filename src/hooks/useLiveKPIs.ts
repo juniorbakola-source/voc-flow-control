@@ -18,6 +18,21 @@ export function useLiveKPIs() {
         .limit(1)
         .single();
 
+      // Fetch complaints from DB
+      const { count: totalComplaints } = await supabase
+        .from("complaints")
+        .select("*", { count: "exact", head: true });
+
+      const { count: closedComplaints } = await supabase
+        .from("complaints")
+        .select("*", { count: "exact", head: true })
+        .eq("status", "closed");
+
+      const { count: orderErrorComplaints } = await supabase
+        .from("complaints")
+        .select("*", { count: "exact", head: true })
+        .eq("category", "erreur_commande");
+
       const shipped = (deliveries || []).filter((d) => d.status === "delivered" || d.delivery_date);
       const withDates = shipped.filter((d) => d.order_date && d.delivery_date);
 
