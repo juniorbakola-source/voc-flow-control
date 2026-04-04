@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      complaints: {
+        Row: {
+          category: string
+          complaint_date: string
+          created_at: string
+          id: string
+          notes: string | null
+          order_number: string | null
+          source: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          complaint_date?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          order_number?: string | null
+          source?: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          complaint_date?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          order_number?: string | null
+          source?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       cost_non_quality: {
         Row: {
           currency: string
