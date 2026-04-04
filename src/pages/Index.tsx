@@ -98,6 +98,11 @@ const Index = () => {
           <IssueTable />
         </motion.section>
 
+        {/* Gestion des Données */}
+        <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.55 }}>
+          <DataManagement />
+        </motion.section>
+
         {/* Sources & Méthodologie */}
         <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
           <SourcesMethodology />
