@@ -10,6 +10,7 @@ import { HeatmapTable } from "@/components/voc/HeatmapTable";
 import { IssueTable } from "@/components/voc/IssueTable";
 import { EcosystemDiagram } from "@/components/voc/EcosystemDiagram";
 import { QualityMetrics } from "@/components/voc/QualityMetrics";
+import { SourcesMethodology } from "@/components/voc/SourcesMethodology";
 
 const Index = () => {
   return (
