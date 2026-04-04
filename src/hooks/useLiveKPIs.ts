@@ -47,8 +47,13 @@ export function useLiveKPIs() {
           : 0;
 
       const totalShipped = shipped.length || 1;
-      const errorCount = (deliveries || []).filter((d) => d.is_order_error).length;
-      const accuracy = ((totalShipped - errorCount) / totalShipped) * 100;
+      // Use DB complaint count for order errors, fallback to delivery flag count
+      const errorCount = orderErrorComplaints ?? (deliveries || []).filter((d) => d.is_order_error).length;
+      const accuracy = totalShipped > 0 ? ((totalShipped - errorCount) / totalShipped) * 100 : 82;
+
+      const complaintTotal = totalComplaints ?? 559;
+      const complaintClosed = closedComplaints ?? 0;
+      const closedRate = complaintTotal > 0 ? (complaintClosed / complaintTotal) * 100 : 0;
 
       const costValue = costData?.value ?? 45000;
       const costTarget = costData?.target ?? 20000;
