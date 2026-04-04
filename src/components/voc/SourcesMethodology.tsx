@@ -103,7 +103,9 @@ export const SourcesMethodology = () => {
             </CollapsibleContent>
           </Collapsible>
         ))}
-      </CardContent>
-    </Card>
+          </CardContent>
+        </CollapsibleContent>
+      </Card>
+    </Collapsible>
   );
 };
