@@ -93,6 +93,11 @@ const Index = () => {
           <IssueTable />
         </motion.section>
 
+        {/* Sources & Méthodologie */}
+        <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
+          <SourcesMethodology />
+        </motion.section>
+
         {/* Pied de page */}
         <footer className="border-t pt-4 pb-8 flex items-center justify-between text-[10px] font-mono text-muted-foreground">
           <span>ELKA Suspension — Système VOC v1.0 • World Class Manufacturing</span>
