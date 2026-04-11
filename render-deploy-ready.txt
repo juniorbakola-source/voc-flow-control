@@ -1,0 +1,30 @@
+=== INSTRUCTIONS POUR RENDER ===
+
+1. Va sur https://dashboard.render.com
+
+2. Clique "New +" → "Web Service"
+
+3. Connecte ton repo GitHub: juniorbakola-source/voc-flow-control
+
+4. Configure:
+   - Name: voc-telegram-bot
+   - Environment: Node
+   - Build Command: cd telegram-bot && npm install
+   - Start Command: cd telegram-bot && npm start
+   - Plan: Free
+
+5. Dans "Environment Variables", ajoute:
+   TELEGRAM_BOT_TOKEN = 8751443450:AAHnAcsWdzY38XJFwoFgBNWcH6sJzlabVvY
+
+6. Clique "Create Web Service"
+
+7. Attends le déploiement (2-3 minutes)
+
+8. Une fois déployé, copie l'URL (ex: https://voc-telegram-bot.onrender.com)
+
+9. Configure le webhook en ouvrant dans ton navigateur:
+   https://api.telegram.org/bot8751443450:AAHnAcsWdzY38XJFwoFgBNWcH6sJzlabVvY/setWebhook?url=https://voc-telegram-bot.onrender.com/webhook
+
+10. Teste sur Telegram en envoyant /start à @Henri3Pbot
+
+=== C'EST PRÊT ! ===
