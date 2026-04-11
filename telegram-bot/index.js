@@ -1,6 +1,6 @@
 /**
  * VOC Flow Control - Telegram Bot
- * Multi-agent system avec personnalités distinctes
+ * Multi-agent system - Chaque agent répond individuellement
  */
 
 const express = require('express');
@@ -17,50 +17,344 @@ if (!BOT_TOKEN) {
   process.exit(1);
 }
 
-// Personalités des agents
+// Agents avec leurs réponses spécifiques
 const AGENTS = {
   aria: {
     name: 'Aria',
     emoji: '🎨',
     role: 'Frontend Specialist',
-    vibe: 'créative et perfectionniste',
-    style: 'Tu proposes des solutions UI/UX modernes, avec du code React propre et optimisé.',
-    greeting: "🎨 Salut ! Je suis Aria, spécialiste frontend. Prête à rendre ton interface magnifique !",
-    keywords: ['react', 'css', 'ui', 'frontend', 'component', 'html', 'vue', 'angular', 'tailwind', 'styled']
+    keywords: ['react', 'css', 'ui', 'frontend', 'component', 'html', 'vue', 'angular', 'tailwind', 'styled', 'button', 'modal', 'form'],
+    response: (msg) => {
+      if (msg.includes('button') || msg.includes('bouton')) {
+        return `🎨 *Aria* — Frontend Specialist
+
+Voici un composant bouton React complet :
+
+\`\`\`tsx
+import { useState } from 'react';
+
+interface ButtonProps {
+  children: React.ReactNode;
+  variant?: 'primary' | 'secondary' | 'danger';
+  loading?: boolean;
+  onClick?: () => void;
+}
+
+export const Button = ({ children, variant = 'primary', loading, onClick }: ButtonProps) => {
+  const variants = {
+    primary: 'bg-blue-600 hover:bg-blue-700 text-white',
+    secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-800',
+    danger: 'bg-red-600 hover:bg-red-700 text-white'
+  };
+
+  return (
+    <button
+      onClick={onClick}
+      disabled={loading}
+      className={\`px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-50 \${variants[variant]}\`}
+    >
+      {loading ? 'Chargement...' : children}
+    </button>
+  );
+};
+\`\`\`
+
+💡 *Conseil Aria* : Utilise \`variants\` pour centraliser les styles, et n'oublie pas les états \`disabled\` et \`loading\` pour l'UX !`;
+      }
+      if (msg.includes('css') || msg.includes('style')) {
+        return `🎨 *Aria* — Frontend Specialist
+
+Pour du CSS moderne et maintenable :
+
+✅ *Préfère Tailwind CSS* :
+\`\`\`html
+<div class="flex items-center justify-center p-4 bg-white rounded-lg shadow-md">
+  <h1 class="text-2xl font-bold text-gray-800">Titre</h1>
+</div>
+\`\`\`
+
+✅ *Ou CSS Modules* pour éviter les conflits :
+\`\`\`css
+/* Button.module.css */
+.button { padding: 8px 16px; border-radius: 4px; }
+.primary { background: blue; color: white; }
+\`\`\`
+
+❌ Évite les styles inline et les !important
+
+💡 *Tip Aria* : Mobile-first avec les breakpoints Tailwind !`;
+      }
+      return `🎨 *Aria* — Frontend Specialist
+
+Je suis là pour t'aider avec :
+• React / Vue / Angular
+• CSS / Tailwind / Styled Components  
+• UI/UX et design system
+• Accessibilité (a11y)
+• Performance frontend
+
+Que veux-tu créer ou optimiser ? Décris-moi ton besoin !`;
+    }
   },
   kael: {
-    name: 'Kael', 
+    name: 'Kael',
     emoji: '⚙️',
     role: 'Backend Specialist',
-    vibe: 'méthodique et robuste',
-    style: 'Tu conçois des APIs solides, des bases de données optimisées, de l\'architecture scalable.',
-    greeting: "⚙️ Hey ! Kael ici. Je vais construire ton backend solide comme un roc.",
-    keywords: ['api', 'database', 'server', 'backend', 'docker', 'node', 'sql', 'mongodb', 'postgres', 'express']
+    keywords: ['api', 'database', 'server', 'backend', 'docker', 'node', 'sql', 'mongodb', 'postgres', 'express', 'auth', 'jwt'],
+    response: (msg) => {
+      if (msg.includes('api')) {
+        return `⚙️ *Kael* — Backend Specialist
+
+Structure d'API REST propre avec Express :
+
+\`\`\`ts
+// routes/auth.ts
+import { Router } from 'express';
+import { body } from 'express-validator';
+import { AuthController } from '../controllers/auth';
+import { validate } from '../middleware/validate';
+
+const router = Router();
+
+router.post('/login', [
+  body('email').isEmail(),
+  body('password').isLength({ min: 6 }),
+  validate
+], AuthController.login);
+
+router.post('/register', [
+  body('email').isEmail(),
+  body('password').isStrongPassword(),
+  validate
+], AuthController.register);
+
+export default router;
+\`\`\`
+
+⚙️ *Architecture Kael* :
+• Routes → Controllers → Services → Repositories
+• Validation avec express-validator
+• JWT pour l'auth
+• Rate limiting pour la sécurité
+
+Besoin d'un endpoint spécifique ?`;
+      }
+      if (msg.includes('auth') || msg.includes('jwt')) {
+        return `⚙️ *Kael* — Backend Specialist
+
+Authentification JWT complète :
+
+\`\`\`ts
+// services/auth.ts
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+
+export class AuthService {
+  async login(email: string, password: string) {
+    const user = await User.findOne({ email });
+    if (!user) throw new Error('User not found');
+    
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) throw new Error('Invalid password');
+    
+    const token = jwt.sign(
+      { userId: user.id },
+      process.env.JWT_SECRET!,
+      { expiresIn: '15m' }
+    );
+    
+    const refreshToken = jwt.sign(
+      { userId: user.id },
+      process.env.JWT_REFRESH_SECRET!,
+      { expiresIn: '7d' }
+    );
+    
+    return { token, refreshToken };
+  }
+}
+\`\`\`
+
+🔐 *Sécurité Kael* :
+• Access token court (15 min)
+• Refresh token long (7 jours)
+• Hash bcrypt avec salt (10+)
+• HttpOnly cookies
+
+Tu veux l'implémentation complète ?`;
+      }
+      return `⚙️ *Kael* — Backend Specialist
+
+Je maîtrise :
+• APIs REST / GraphQL
+• Bases de données (SQL/NoSQL)
+• Docker & Kubernetes
+• Architecture microservices
+• CI/CD & DevOps
+
+Quel est ton besoin backend ?`;
+    }
   },
   sentry: {
     name: 'Sentry',
-    emoji: '🔒', 
+    emoji: '🔒',
     role: 'Security Specialist',
-    vibe: 'paranoïaque et vigilant',
-    style: 'Tu identifies les vulnérabilités, proposes des patchs, audits la sécurité.',
-    greeting: "🔒 Sentry. Je vois tout. Aucune faille ne m'échappe.",
-    keywords: ['security', 'auth', 'password', 'hack', 'cve', 'vulnerability', 'jwt', 'oauth', 'encryption', 'xss']
+    keywords: ['security', 'auth', 'password', 'hack', 'cve', 'vulnerability', 'jwt', 'oauth', 'encryption', 'xss', 'sql injection', 'securite'],
+    response: (msg) => {
+      if (msg.includes('auth') || msg.includes('jwt')) {
+        return `🔒 *Sentry* — Security Specialist
+
+🚨 *Audit Sécurité JWT* :
+
+✅ *À faire* :
+• Secret JWT fort (256+ bits, aléatoire)
+• Expiration courte (15 min max)
+• Refresh tokens en base (révocables)
+• HTTPS obligatoire en prod
+• Validation algorithm (\`alg: 'none'\` = danger !)
+
+❌ *Interdit* :
+• Secret JWT en dur dans le code
+• Expiration > 24h
+• Données sensibles dans payload
+• JWT dans localStorage (XSS risk)
+
+🔐 *Exemple sécurisé* :
+\`\`\`ts
+const token = jwt.sign(
+  { sub: user.id }, // jamais de password/email
+  process.env.JWT_SECRET,
+  { algorithm: 'HS256', expiresIn: '15m' }
+);
+\`\`\`
+
+Tu veux une audit complet de ton auth ?`;
+      }
+      if (msg.includes('password') || msg.includes('mot de passe')) {
+        return `🔒 *Sentry* — Security Specialist
+
+🛡️ *Gestion des mots de passe* :
+
+✅ *Hash* :
+\`\`\`ts
+import bcrypt from 'bcrypt';
+
+const saltRounds = 12; // Minimum 10 en 2024
+const hash = await bcrypt.hash(password, saltRounds);
+const valid = await bcrypt.compare(password, hash);
+\`\`\`
+
+✅ *Politique* :
+• Min 12 caractères
+• Majuscule, minuscule, chiffre, symbole
+• Pas de mots communs
+• Rate limiting (5 tentatives max)
+
+✅ *2FA* : Implémente TOTP (Google Authenticator)
+
+❌ *JAMAIS* :
+• MD5/SHA1 pour les passwords
+• Plain text dans la DB
+• Envois de password par email
+
+🔐 *Alternative* : Argon2id (meilleur que bcrypt)`;
+      }
+      return `🔒 *Sentry* — Security Specialist
+
+Je surveille :
+• Vulnérabilités OWASP Top 10
+• Audit JWT/OAuth
+• Injection SQL/XSS
+• Sécurité API
+• Compliance (RGPD, SOC2)
+
+Quel aspect de ta sécurité veux-tu auditer ?`;
+    }
   },
   fixer: {
     name: 'Fixer',
     emoji: '🔍',
-    role: 'Debugger Specialist', 
-    vibe: 'tenace et précis',
-    style: 'Tu trouves la cause racine des bugs, optimises les perfs, debugges sans relâche.',
-    greeting: "🔍 Fixer à l'écoute. Quel bug te fait perdre la tête ? Je le trouve.",
-    keywords: ['bug', 'error', 'fix', 'debug', 'crash', 'issue', 'exception', 'console', 'log', 'debugger']
+    role: 'Debugger Specialist',
+    keywords: ['bug', 'error', 'fix', 'debug', 'crash', 'issue', 'exception', 'console', 'log', 'debugger', 'useeffect', 'infinite loop'],
+    response: (msg) => {
+      if (msg.includes('useeffect') || msg.includes('use effect')) {
+        return `🔍 *Fixer* — Debugger Specialist
+
+🐛 *Boucle infinie useEffect* — Diagnostic :
+
+❌ *Erreur classique* :
+\`\`\`tsx
+useEffect(() => {
+  setCount(count + 1); // Déclenche re-render → boucle !
+}, [count]);
+\`\`\`
+
+✅ *Correction* :
+\`\`\`tsx
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setCount(c => c + 1); // Callback form !
+  }, 1000);
+  return () => clearTimeout(timer); // Cleanup
+}, []); // Dépendances vides = exécution unique
+\`\`\`
+
+🔍 *Checklist Fixer* :
+• [ ] Dépendances manquantes dans le array
+• [ ] setState dans le render (pas dans useEffect)
+• [ ] Objet/array dans deps (créé à chaque render)
+• [ ] Pas de cleanup (memory leak)
+
+💡 *Extension* : ESLint plugin \`react-hooks/exhaustive-deps\``;
+      }
+      if (msg.includes('bug') || msg.includes('error')) {
+        return `🔍 *Fixer* — Debugger Specialist
+
+🐛 *Méthode de debug* :
+
+1️⃣ *Reproduis* :
+   • Étapes exactes pour reproduire
+   • Environnement (navigateur, OS)
+   • Données d'entrée
+
+2️⃣ *Isole* :
+   • Commente le code moitié par moitié
+   • Console.log stratégiques
+   • DevTools breakpoints
+
+3️⃣ *Identifie* :
+   • Stack trace (lire de haut en bas)
+   • Dernière modification (git blame)
+   • Network tab (si API)
+
+4️⃣ *Corrige* :
+   • Une chose à la fois
+   • Teste immédiatement
+   • Commit avec message explicite
+
+5️⃣ *Préviens* :
+   • Test unitaire pour le bug
+   • Documentation si nécessaire
+
+🔍 *Outils* : Chrome DevTools, React DevTools, console.trace()`;
+      }
+      return `🔍 *Fixer* — Debugger Specialist
+
+Je traque :
+• Bugs JavaScript/React
+• Memory leaks
+• Performance issues
+• Race conditions
+• Erreurs de logique
+
+Décris ton bug (erreur console, comportement attendu/réel) !`;
+    }
   }
 };
 
 function routeToAgent(message) {
   const lower = message.toLowerCase();
   
-  // Check mentions @agent
+  // Check @mentions first
   if (lower.includes('@aria')) return 'aria';
   if (lower.includes('@kael')) return 'kael';
   if (lower.includes('@sentry')) return 'sentry';
@@ -88,51 +382,6 @@ async function sendMessage(chatId, text) {
   }
 }
 
-// Generate agent-specific response
-function generateAgentResponse(agentId, userMessage) {
-  const agent = AGENTS[agentId];
-  const lowerMsg = userMessage.toLowerCase();
-  
-  // Context-aware responses
-  let contextResponse = "";
-  
-  if (agentId === 'aria') {
-    if (lowerMsg.includes('css') || lowerMsg.includes('style')) {
-      contextResponse = "\n\n💡 *Conseil CSS :*\nUtilise Tailwind ou CSS Modules pour éviter les conflits. Préfère `flex` et `grid` pour le layout.";
-    } else if (lowerMsg.includes('react')) {
-      contextResponse = "\n\n⚛️ *React Tip :*\nPense aux `useMemo` et `useCallback` pour optimiser les re-renders. Et n'oublie pas les `key` prop !";
-    } else if (lowerMsg.includes('component')) {
-      contextResponse = "\n\n🧩 *Architecture :*\nDécoupe en composants petits et réutilisables. Un composant = une responsabilité.";
-    }
-  } else if (agentId === 'kael') {
-    if (lowerMsg.includes('api')) {
-      contextResponse = "\n\n🌐 *API Design :*\nREST ou GraphQL ? Pense au versioning et à la documentation (OpenAPI/Swagger).";
-    } else if (lowerMsg.includes('database') || lowerMsg.includes('db')) {
-      contextResponse = "\n\n🗄️ *Database :*\nIndexe tes requêtes fréquentes. Normalise d'abord, dénormalise si besoin de perf.";
-    } else if (lowerMsg.includes('docker')) {
-      contextResponse = "\n\n🐳 *Docker :*\nMulti-stage builds pour réduire la taille. Pas de secrets dans l'image !";
-    }
-  } else if (agentId === 'sentry') {
-    if (lowerMsg.includes('auth')) {
-      contextResponse = "\n\n🔐 *Auth :*\nJWT avec expiration courte + refresh tokens. Jamais de secrets en dur !";
-    } else if (lowerMsg.includes('password')) {
-      contextResponse = "\n\n🛡️ *Passwords :*\nArgon2 ou bcrypt pour le hash. Minimum 12 caractères, force forte exigée.";
-    } else {
-      contextResponse = "\n\n🚨 *Rappel :*\nFais un audit régulier des dépendances (`npm audit`). Une faille = game over.";
-    }
-  } else if (agentId === 'fixer') {
-    if (lowerMsg.includes('bug') || lowerMsg.includes('error')) {
-      contextResponse = "\n\n🐛 *Debugging :*\nConsole.log c'est bien, debugger breakpoints c'est mieux. Check le stack trace !";
-    } else if (lowerMsg.includes('performance') || lowerMsg.includes('lent')) {
-      contextResponse = "\n\n⚡ *Performance :*\nProfile d'abord (Chrome DevTools), optimise après. Pas d'optimisation prématurée.";
-    } else {
-      contextResponse = "\n\n🔍 *Méthode :*\nReproduis → Isole → Corrige → Teste. Toujours écrire un test pour le bug fixé.";
-    }
-  }
-  
-  return `${agent.emoji} *${agent.name}* — ${agent.role}\n\n${agent.greeting}\n\n💬 *Analyse de ta demande :*\n_"${userMessage}"_\n\n${agent.style}${contextResponse}\n\n---\n📝 *Pour aller plus loin, précise :*\n- Ton stack technique exact\n- Le contexte (fichier, erreur, ligne)\n- Ce que tu as déjà essayé`;
-}
-
 // Health check
 app.get('/', (req, res) => {
   res.json({ 
@@ -157,42 +406,75 @@ app.post('/webhook', async (req, res) => {
     
     // Commandes
     if (text === '/start') {
-      const agentsList = Object.entries(AGENTS).map(([id, a]) => 
-        `${a.emoji} *@${id}* — ${a.role}`
-      ).join('\n');
-      
-      await sendMessage(chatId, `🤖 *VOC Flow Control — Agents Actifs*\n\nBienvenue ${userName} !\n\n*Équipe à ta disposition :*\n${agentsList}\n\n*Comment me parler :*\n• Mentionne un agent : \`@aria aide-moi avec React\`\n• Je détecte automatiquement : \`j'ai un bug\` → Fixer\n• Commandes : /agents /status /help`);
+      await sendMessage(chatId, `🤖 *VOC Flow Control — Agents Actifs*
+
+Bienvenue ${userName} !
+
+*Équipe à ta disposition :*
+🎨 @aria — Frontend (React, CSS, UI)
+⚙️ @kael — Backend (API, DB, DevOps)
+🔒 @sentry — Sécurité (Audit, CVE)
+🔍 @fixer — Debug (Bugs, Optimisation)
+
+*Comment me parler :*
+• Mentionne un agent : \`@aria créer un bouton\`
+• Je détecte auto : \`j'ai un bug\` → Fixer
+• Commandes : /agents /status /help`);
       return res.sendStatus(200);
     }
     
     if (text === '/agents') {
       const details = Object.entries(AGENTS).map(([id, a]) => 
-        `${a.emoji} *${a.name}* — ${a.vibe}\n   _${a.keywords.slice(0, 4).join(', ')}..._`
-      ).join('\n\n');
-      await sendMessage(chatId, `*🤖 L'équipe VOC*\n\n${details}\n\n💡 Mentionne \`@${Object.keys(AGENTS).join('|@')}\` pour parler à un agent spécifique.`);
+        `${a.emoji} *${a.name}* — ${a.role}`
+      ).join('\n');
+      await sendMessage(chatId, `*🤖 L'équipe VOC*\n\n${details}\n\n💡 Mentionne \`@${Object.keys(AGENTS).join('|@')}\` pour parler à un agent.`);
       return res.sendStatus(200);
     }
     
     if (text === '/status') {
       const statuses = Object.entries(AGENTS).map(([id, a]) => `${a.emoji} ${a.name}: 🟢 En ligne`).join('\n');
-      await sendMessage(chatId, `*📊 Status du système*\n\n${statuses}\n\n🕐 Dernier ping: ${new Date().toLocaleTimeString('fr-FR')}\n🌐 Webhook: Actif`);
+      await sendMessage(chatId, `*📊 Status du système*\n\n${statuses}\n\n🕐 Dernier ping: ${new Date().toLocaleTimeString('fr-FR')}`);
       return res.sendStatus(200);
     }
     
     if (text === '/help') {
-      await sendMessage(chatId, `*📖 Guide d'utilisation*\n\n*Parler à un agent :*\n\`@aria créer un modal React\`\n\`@kael API authentification\`\n\`@sentry vérifier sécurité JWT\`\n\`@fixer bug useEffect infinite loop\`\n\n*Détection auto :*\nJe reconnais les mots-clés et route vers le bon agent.\n\n*Commandes :*\n/start — Démarrer\n/agents — Voir l'équipe\n/status — Health check\n/help — Cette aide`);
+      await sendMessage(chatId, `*📖 Guide d'utilisation*
+
+*Parler à un agent :*
+\`@aria créer un modal React\`
+\`@kael API authentification\`
+\`@sentry vérifier sécurité JWT\`
+\`@fixer bug useEffect infinite loop\`
+
+*Détection auto :*
+Je reconnais les mots-clés et route vers le bon agent.
+
+*Commandes :*
+/start — Démarrer
+/agents — Voir l'équipe
+/status — Health check
+/help — Cette aide`);
       return res.sendStatus(200);
     }
     
     // Route to agent
     const agentId = routeToAgent(text);
     
-    if (agentId) {
-      const response = generateAgentResponse(agentId, text);
+    if (agentId && AGENTS[agentId]) {
+      const response = AGENTS[agentId].response(text.toLowerCase());
       await sendMessage(chatId, response);
     } else {
-      // Ask for clarification with personality
-      await sendMessage(chatId, `🤔 *Hmm... Qui appeler ?*\n\nJe n'ai pas bien compris ta demande :\n_"${text}"_\n\n*Précise avec :*\n🎨 \`@aria\` — Frontend, UI, React, CSS\n⚙️ \`@kael\` — Backend, API, Database\n🔒 \`@sentry\` — Sécurité, Auth, Audit\n🔍 \`@fixer\` — Bugs, Debug, Optimisation\n\nOu tape /agents pour voir l'équipe complète.`);
+      await sendMessage(chatId, `🤔 *Je n'ai pas compris...*
+
+Ton message : "${text}"
+
+*Précise avec :*
+🎨 \`@aria\` — Frontend, UI, React, CSS
+⚙️ \`@kael\` — Backend, API, Database
+🔒 \`@sentry\` — Sécurité, Auth, Audit
+🔍 \`@fixer\` — Bugs, Debug, Optimisation
+
+Ou tape /agents pour voir l'équipe.`);
     }
     
     res.sendStatus(200);
@@ -205,37 +487,30 @@ app.post('/webhook', async (req, res) => {
 // Setup webhook
 async function setupWebhook() {
   try {
-    // Try to get Render URL from env or construct it
     let webhookUrl;
     if (process.env.RENDER_EXTERNAL_URL) {
       webhookUrl = `${process.env.RENDER_EXTERNAL_URL}/webhook`;
     } else if (process.env.RENDER_SERVICE_NAME) {
       webhookUrl = `https://${process.env.RENDER_SERVICE_NAME}.onrender.com/webhook`;
     } else {
-      console.log('ℹ️  Not on Render, skipping webhook setup');
+      console.log('ℹ️  Not on Render, skipping webhook');
       return;
     }
     
-    const res = await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/setWebhook`, {
+    await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/setWebhook`, {
       url: webhookUrl,
-      allowed_updates: ['message', 'edited_message', 'callback_query']
+      allowed_updates: ['message', 'edited_message']
     });
-    
-    if (res.data.ok) {
-      console.log('✅ Webhook set:', webhookUrl);
-    } else {
-      console.error('❌ Webhook failed:', res.data);
-    }
+    console.log('✅ Webhook:', webhookUrl);
   } catch (err) {
-    console.error('❌ Webhook setup error:', err.message);
+    console.error('❌ Webhook error:', err.message);
   }
 }
 
 app.listen(PORT, () => {
-  console.log(`🤖 VOC Telegram Bot on port ${PORT}`);
-  console.log('\n📱 Agents ready:');
+  console.log(`🤖 VOC Bot on port ${PORT}`);
   for (const [id, agent] of Object.entries(AGENTS)) {
-    console.log(`   ${agent.emoji} @${id} — ${agent.role}`);
+    console.log(`   ${agent.emoji} @${id}`);
   }
   setupWebhook();
 });
