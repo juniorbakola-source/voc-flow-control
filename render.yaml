@@ -1,17 +1,14 @@
 services:
   - type: web
     name: voc-telegram-bot
-    env: node
+    runtime: node
+    plan: free
     buildCommand: cd telegram-bot && npm install
-    startCommand: cd telegram-bot && npm start
+    startCommand: cd telegram-bot && node index.js
     envVars:
       - key: TELEGRAM_BOT_TOKEN
-        sync: false  # Tu dois l'ajouter manuellement dans Render
-      - key: WEBHOOK_URL
-        fromService:
-          name: voc-telegram-bot
-          type: web
-          property: host
+        sync: false
       - key: PORT
         value: 10000
-    plan: free
+      - key: NODE_ENV
+        value: production
