@@ -1,0 +1,174 @@
+<!--
+  VOC Flow Control — Dashboard Component
+  Shows system metrics, agent status overview, recent alerts and activity.
+  Included in lovable.html as #view-dashboard.
+-->
+
+<div class="section-header">
+  <h1 class="section-title">Dashboard</h1>
+  <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.8rem;color:#22c55e;">
+    <span class="pulse-dot"></span>
+    Système opérationnel
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon blue">
+      <svg width="22" height="22"><use href="#icon-users"/></svg>
+    </div>
+    <div>
+      <div class="stat-value">4</div>
+      <div class="stat-label">Agents Actifs</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon green">
+      <svg width="22" height="22"><use href="#icon-code"/></svg>
+    </div>
+    <div>
+      <div class="stat-value">30+</div>
+      <div class="stat-label">Skills Disponibles</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon purple">
+      <svg width="22" height="22"><use href="#icon-check"/></svg>
+    </div>
+    <div>
+      <div class="stat-value">760</div>
+      <div class="stat-label">Tâches Complétées</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon red">
+      <svg width="22" height="22"><use href="#icon-shield"/></svg>
+    </div>
+    <div>
+      <div class="stat-value">2</div>
+      <div class="stat-label">Alertes Sécurité</div>
+    </div>
+  </div>
+</div>
+
+<!-- Panels -->
+<div class="panels-grid">
+  <!-- Agent Status -->
+  <div class="card">
+    <div class="panel-title">
+      <svg width="18" height="18"><use href="#icon-users"/></svg>
+      Agents Status
+    </div>
+
+    <div class="agent-row" data-agent="Aria" style="cursor:pointer" title="Ouvrir le chat avec Aria">
+      <div style="display:flex;align-items:center;gap:0.75rem">
+        <span class="status-dot online" data-name="Aria"></span>
+        <div>
+          <div style="font-weight:500">🎨 Aria</div>
+          <div style="font-size:0.75rem;color:var(--text-secondary)">Frontend</div>
+        </div>
+      </div>
+      <div style="text-align:right;font-size:0.8rem;color:var(--text-secondary)">
+        <div>3 tâches actives</div>
+        <div>Actif il y a 2 min</div>
+      </div>
+    </div>
+
+    <div class="agent-row" data-agent="Kael" style="cursor:pointer" title="Ouvrir le chat avec Kael">
+      <div style="display:flex;align-items:center;gap:0.75rem">
+        <span class="status-dot online" data-name="Kael"></span>
+        <div>
+          <div style="font-weight:500">⚙️ Kael</div>
+          <div style="font-size:0.75rem;color:var(--text-secondary)">Backend</div>
+        </div>
+      </div>
+      <div style="text-align:right;font-size:0.8rem;color:var(--text-secondary)">
+        <div>2 tâches actives</div>
+        <div>Actif il y a 5 min</div>
+      </div>
+    </div>
+
+    <div class="agent-row" data-agent="Sentry" style="cursor:pointer" title="Ouvrir le chat avec Sentry">
+      <div style="display:flex;align-items:center;gap:0.75rem">
+        <span class="status-dot online" data-name="Sentry"></span>
+        <div>
+          <div style="font-weight:500">🔒 Sentry</div>
+          <div style="font-size:0.75rem;color:var(--text-secondary)">Security</div>
+        </div>
+      </div>
+      <div style="text-align:right;font-size:0.8rem;color:var(--text-secondary)">
+        <div>1 tâche active</div>
+        <div>Actif il y a 1 h</div>
+      </div>
+    </div>
+
+    <div class="agent-row" data-agent="Fixer" style="cursor:pointer" title="Ouvrir le chat avec Fixer">
+      <div style="display:flex;align-items:center;gap:0.75rem">
+        <span class="status-dot online" data-name="Fixer"></span>
+        <div>
+          <div style="font-weight:500">🔍 Fixer</div>
+          <div style="font-size:0.75rem;color:var(--text-secondary)">Debugger</div>
+        </div>
+      </div>
+      <div style="text-align:right;font-size:0.8rem;color:var(--text-secondary)">
+        <div>4 tâches actives</div>
+        <div>Actif il y a 10 min</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Alerts -->
+  <div class="card">
+    <div class="panel-title">
+      <svg width="18" height="18"><use href="#icon-alert"/></svg>
+      Alertes &amp; Notifications
+    </div>
+
+    <div class="alert-item">
+      <div class="alert-icon error">
+        <svg width="16" height="16"><use href="#icon-alert"/></svg>
+      </div>
+      <div>
+        <div style="font-size:0.85rem;font-weight:500">[Sentry] CVE critique — lodash</div>
+        <div style="font-size:0.75rem;color:var(--text-secondary)">Mise à jour vers v4.17.21 requise</div>
+        <div style="font-size:0.7rem;color:var(--text-muted);margin-top:2px">il y a 5 min</div>
+      </div>
+    </div>
+
+    <div class="alert-item">
+      <div class="alert-icon warning">
+        <svg width="16" height="16"><use href="#icon-alert"/></svg>
+      </div>
+      <div>
+        <div style="font-size:0.85rem;font-weight:500">[Fixer] Tests en échec</div>
+        <div style="font-size:0.75rem;color:var(--text-secondary)">auth.service.ts — 3 tests KO</div>
+        <div style="font-size:0.7rem;color:var(--text-muted);margin-top:2px">il y a 15 min</div>
+      </div>
+    </div>
+
+    <div class="alert-item">
+      <div class="alert-icon info">
+        <svg width="16" height="16"><use href="#icon-info"/></svg>
+      </div>
+      <div>
+        <div style="font-size:0.85rem;font-weight:500">[Aria] Optimisation mobile</div>
+        <div style="font-size:0.75rem;color:var(--text-secondary)">Amélioration LCP recommandée</div>
+        <div style="font-size:0.7rem;color:var(--text-muted);margin-top:2px">il y a 30 min</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Activity (full-width) -->
+  <div class="card" style="grid-column:1/-1">
+    <div class="panel-title">
+      <svg width="18" height="18"><use href="#icon-clock"/></svg>
+      Activité Récente
+    </div>
+    <div class="activity-line">• [ARIA] Optimisation du bundle React terminée — performance +40 %</div>
+    <div class="activity-line">• [KAEL] API d'authentification déployée avec succès</div>
+    <div class="activity-line">• [SENTRY] Scan de sécurité quotidien complété — aucune anomalie</div>
+    <div class="activity-line">• [FIXER] Bug de pagination corrigé dans users.controller</div>
+    <div class="activity-line">• [KAEL] Migration PostgreSQL 15 réussie</div>
+  </div>
+</div>

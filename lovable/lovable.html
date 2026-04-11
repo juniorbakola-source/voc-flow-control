@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VOC Flow Control — Lovable</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+<div id="app">
+
+  <!-- ── Header ──────────────────────────────────────────────────────── -->
+  <header id="header">
+    <div class="logo">
+      <div class="logo-icon">🤖</div>
+      VOC Flow Control
+    </div>
+
+    <nav>
+      <button class="nav-btn" data-view="dashboard">
+        <svg width="14" height="14" style="vertical-align:-2px;margin-right:4px"><use href="#icon-dashboard"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-btn" data-view="agents">
+        <svg width="14" height="14" style="vertical-align:-2px;margin-right:4px"><use href="#icon-agents"/></svg>
+        Agents
+      </button>
+      <button class="nav-btn" data-view="chat">
+        <svg width="14" height="14" style="vertical-align:-2px;margin-right:4px"><use href="#icon-chat"/></svg>
+        Chat
+      </button>
+    </nav>
+
+    <div class="header-status">
+      <span class="pulse-dot"></span>
+      4 agents en ligne
+    </div>
+  </header>
+
+  <!-- ── Main content ─────────────────────────────────────────────────── -->
+  <main id="main">
+
+    <!-- Dashboard View -->
+    <section id="view-dashboard" class="view">
+      <div class="section-header">
+        <h1 class="section-title">Dashboard</h1>
+        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.8rem;color:#22c55e;">
+          <span class="pulse-dot"></span>
+          Système opérationnel
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue">
+            <svg width="22" height="22"><use href="#icon-users"/></svg>
+          </div>
+          <div>
+            <div class="stat-value">4</div>
+            <div class="stat-label">Agents Actifs</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">
+            <svg width="22" height="22"><use href="#icon-code"/></svg>
+          </div>
+          <div>
+            <div class="stat-value">30+</div>
+            <div class="stat-label">Skills Disponibles</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple">
+            <svg width="22" height="22"><use href="#icon-check"/></svg>
+          </div>
+          <div>
+            <div class="stat-value">760</div>
+            <div class="stat-label">Tâches Complétées</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon red">
+            <svg width="22" height="22"><use href="#icon-shield"/></svg>
+          </div>
+          <div>
+            <div class="stat-value">2</div>
+            <div class="stat-label">Alertes Sécurité</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panels -->
+      <div class="panels-grid">
+        <!-- Agent Status panel -->
+        <div class="card">
+          <div class="panel-title">
+            <svg width="18" height="18"><use href="#icon-users"/></svg>
+            Agents Status
+          </div>
+
+          <div class="agent-row" data-agent="Aria" style="cursor:pointer" title="Ouvrir le chat avec Aria">
+            <div style="display:flex;align-items:center;gap:0.75rem">
+              <span class="status-dot online" data-name="Aria"></span>
+              <div>
+                <div style="font-weight:500">🎨 Aria</div>
+                <div style="font-size:0.75rem;color:var(--text-secondary)">Frontend</div>
+              </div>
+            </div>
+            <div style="text-align:right;font-size:0.8rem;color:var(--text-secondary)">
+              <div>3 tâches actives</div>
+              <div>Actif il y a 2 min</div>
+            </div>
+          </div>
+
+          <div class="agent-row" data-agent="Kael" style="cursor:pointer" title="Ouvrir le chat avec Kael">
+            <div style="display:flex;align-items:center;gap:0.75rem">
+              <span class="status-dot online" data-name="Kael"></span>
+              <div>
+                <div style="font-weight:500">⚙️ Kael</div>
+                <div style="font-size:0.75rem;color:var(--text-secondary)">Backend</div>
+              </div>
+            </div>
+            <div style="text-align:right;font-size:0.8rem;color:var(--text-secondary)">
+              <div>2 tâches actives</div>
+              <div>Actif il y a 5 min</div>
+            </div>
+          </div>
+
+          <div class="agent-row" data-agent="Sentry" style="cursor:pointer" title="Ouvrir le chat avec Sentry">
+            <div style="display:flex;align-items:center;gap:0.75rem">
+              <span class="status-dot online" data-name="Sentry"></span>
+              <div>
+                <div style="font-weight:500">🔒 Sentry</div>
+                <div style="font-size:0.75rem;color:var(--text-secondary)">Security</div>
+              </div>
+            </div>
+            <div style="text-align:right;font-size:0.8rem;color:var(--text-secondary)">
+              <div>1 tâche active</div>
+              <div>Actif il y a 1 h</div>
+            </div>
+          </div>
+
+          <div class="agent-row" data-agent="Fixer" style="cursor:pointer" title="Ouvrir le chat avec Fixer">
+            <div style="display:flex;align-items:center;gap:0.75rem">
+              <span class="status-dot online" data-name="Fixer"></span>
+              <div>
+                <div style="font-weight:500">🔍 Fixer</div>
+                <div style="font-size:0.75rem;color:var(--text-secondary)">Debugger</div>
+              </div>
+            </div>
+            <div style="text-align:right;font-size:0.8rem;color:var(--text-secondary)">
+              <div>4 tâches actives</div>
+              <div>Actif il y a 10 min</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alerts panel -->
+        <div class="card">
+          <div class="panel-title">
+            <svg width="18" height="18"><use href="#icon-alert"/></svg>
+            Alertes &amp; Notifications
+          </div>
+
+          <div class="alert-item">
+            <div class="alert-icon error">
+              <svg width="16" height="16"><use href="#icon-alert"/></svg>
+            </div>
+            <div>
+              <div style="font-size:0.85rem;font-weight:500">[Sentry] CVE critique — lodash</div>
+              <div style="font-size:0.75rem;color:var(--text-secondary)">Mise à jour vers v4.17.21 requise</div>
+              <div style="font-size:0.7rem;color:var(--text-muted);margin-top:2px">il y a 5 min</div>
+            </div>
+          </div>
+
+          <div class="alert-item">
+            <div class="alert-icon warning">
+              <svg width="16" height="16"><use href="#icon-alert"/></svg>
+            </div>
+            <div>
+              <div style="font-size:0.85rem;font-weight:500">[Fixer] Tests en échec</div>
+              <div style="font-size:0.75rem;color:var(--text-secondary)">auth.service.ts — 3 tests KO</div>
+              <div style="font-size:0.7rem;color:var(--text-muted);margin-top:2px">il y a 15 min</div>
+            </div>
+          </div>
+
+          <div class="alert-item">
+            <div class="alert-icon info">
+              <svg width="16" height="16"><use href="#icon-info"/></svg>
+            </div>
+            <div>
+              <div style="font-size:0.85rem;font-weight:500">[Aria] Optimisation mobile</div>
+              <div style="font-size:0.75rem;color:var(--text-secondary)">Amélioration LCP recommandée</div>
+              <div style="font-size:0.7rem;color:var(--text-muted);margin-top:2px">il y a 30 min</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity panel (full width) -->
+        <div class="card" style="grid-column:1/-1">
+          <div class="panel-title">
+            <svg width="18" height="18"><use href="#icon-clock"/></svg>
+            Activité Récente
+          </div>
+          <div class="activity-line">• [ARIA] Optimisation du bundle React terminée — performance +40 %</div>
+          <div class="activity-line">• [KAEL] API d'authentification déployée avec succès</div>
+          <div class="activity-line">• [SENTRY] Scan de sécurité quotidien complété — aucune anomalie</div>
+          <div class="activity-line">• [FIXER] Bug de pagination corrigé dans users.controller</div>
+          <div class="activity-line">• [KAEL] Migration PostgreSQL 15 réussie</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Agents View -->
+    <section id="view-agents" class="view">
+      <div class="section-header">
+        <h1 class="section-title">Agents</h1>
+        <button class="btn btn-primary" onclick="openGenerateModal()">
+          <svg width="16" height="16"><use href="#icon-plus"/></svg>
+          Générer un Agent
+        </button>
+      </div>
+
+      <div class="agents-grid">
+
+        <!-- Aria -->
+        <div class="agent-card" data-agent="Aria">
+          <div class="agent-header">
+            <div style="display:flex;align-items:flex-start;gap:1rem">
+              <div class="agent-avatar">🎨</div>
+              <div class="agent-info">
+                <div class="agent-name">Aria</div>
+                <div class="agent-role">Frontend Specialist</div>
+                <div class="agent-meta">
+                  <span class="status-dot online" data-name="Aria"></span>
+                  <span class="badge badge-green status-badge" data-name="Aria">active</span>
+                  <span style="color:var(--text-muted)">·</span>
+                  <span style="font-size:0.75rem;color:var(--text-secondary)">Heartbeat: 2h</span>
+                </div>
+              </div>
+            </div>
+            <div class="agent-controls">
+              <button class="btn-icon toggle-btn" data-name="Aria" title="Mettre en pause">
+                <svg width="16" height="16"><use href="#icon-pause"/></svg>
+              </button>
+              <button class="btn-icon config-btn" data-name="Aria" title="Configurer">
+                <svg width="16" height="16"><use href="#icon-settings"/></svg>
+              </button>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.4rem">Skills (5)</div>
+            <div class="skills-list">
+              <span class="badge">React</span>
+              <span class="badge">Vue</span>
+              <span class="badge">UX</span>
+              <span class="badge">Performance</span>
+              <span class="badge">CSS</span>
+            </div>
+          </div>
+          <div class="agent-stats">
+            <div>
+              <div class="agent-stat-val">156</div>
+              <div class="agent-stat-lbl">Tâches complétées</div>
+            </div>
+            <div>
+              <div class="agent-stat-txt">Optimisation bundle React</div>
+              <div class="agent-stat-lbl">Dernière action</div>
+            </div>
+          </div>
+          <button class="btn btn-blue-soft open-chat-btn" data-agent="Aria" style="width:100%;justify-content:center;margin-top:1rem">
+            Communiquer avec Aria
+          </button>
+        </div>
+
+        <!-- Kael -->
+        <div class="agent-card" data-agent="Kael">
+          <div class="agent-header">
+            <div style="display:flex;align-items:flex-start;gap:1rem">
+              <div class="agent-avatar">⚙️</div>
+              <div class="agent-info">
+                <div class="agent-name">Kael</div>
+                <div class="agent-role">Backend Specialist</div>
+                <div class="agent-meta">
+                  <span class="status-dot online" data-name="Kael"></span>
+                  <span class="badge badge-green status-badge" data-name="Kael">active</span>
+                  <span style="color:var(--text-muted)">·</span>
+                  <span style="font-size:0.75rem;color:var(--text-secondary)">Heartbeat: 2h</span>
+                </div>
+              </div>
+            </div>
+            <div class="agent-controls">
+              <button class="btn-icon toggle-btn" data-name="Kael" title="Mettre en pause">
+                <svg width="16" height="16"><use href="#icon-pause"/></svg>
+              </button>
+              <button class="btn-icon config-btn" data-name="Kael" title="Configurer">
+                <svg width="16" height="16"><use href="#icon-settings"/></svg>
+              </button>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.4rem">Skills (5)</div>
+            <div class="skills-list">
+              <span class="badge">APIs</span>
+              <span class="badge">PostgreSQL</span>
+              <span class="badge">Redis</span>
+              <span class="badge">Docker</span>
+              <span class="badge">Node.js</span>
+            </div>
+          </div>
+          <div class="agent-stats">
+            <div>
+              <div class="agent-stat-val">203</div>
+              <div class="agent-stat-lbl">Tâches complétées</div>
+            </div>
+            <div>
+              <div class="agent-stat-txt">Déploiement API auth</div>
+              <div class="agent-stat-lbl">Dernière action</div>
+            </div>
+          </div>
+          <button class="btn btn-blue-soft open-chat-btn" data-agent="Kael" style="width:100%;justify-content:center;margin-top:1rem">
+            Communiquer avec Kael
+          </button>
+        </div>
+
+        <!-- Sentry -->
+        <div class="agent-card" data-agent="Sentry">
+          <div class="agent-header">
+            <div style="display:flex;align-items:flex-start;gap:1rem">
+              <div class="agent-avatar">🔒</div>
+              <div class="agent-info">
+                <div class="agent-name">Sentry</div>
+                <div class="agent-role">Security Specialist</div>
+                <div class="agent-meta">
+                  <span class="status-dot online" data-name="Sentry"></span>
+                  <span class="badge badge-green status-badge" data-name="Sentry">active</span>
+                  <span style="color:var(--text-muted)">·</span>
+                  <span style="font-size:0.75rem;color:var(--text-secondary)">Heartbeat: 24h</span>
+                </div>
+              </div>
+            </div>
+            <div class="agent-controls">
+              <button class="btn-icon toggle-btn" data-name="Sentry" title="Mettre en pause">
+                <svg width="16" height="16"><use href="#icon-pause"/></svg>
+              </button>
+              <button class="btn-icon config-btn" data-name="Sentry" title="Configurer">
+                <svg width="16" height="16"><use href="#icon-settings"/></svg>
+              </button>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.4rem">Skills (5)</div>
+            <div class="skills-list">
+              <span class="badge">Audit</span>
+              <span class="badge">CVE</span>
+              <span class="badge">Compliance</span>
+              <span class="badge">Secrets</span>
+              <span class="badge">OWASP</span>
+            </div>
+          </div>
+          <div class="agent-stats">
+            <div>
+              <div class="agent-stat-val">89</div>
+              <div class="agent-stat-lbl">Tâches complétées</div>
+            </div>
+            <div>
+              <div class="agent-stat-txt">Scan quotidien complété</div>
+              <div class="agent-stat-lbl">Dernière action</div>
+            </div>
+          </div>
+          <button class="btn btn-blue-soft open-chat-btn" data-agent="Sentry" style="width:100%;justify-content:center;margin-top:1rem">
+            Communiquer avec Sentry
+          </button>
+        </div>
+
+        <!-- Fixer -->
+        <div class="agent-card" data-agent="Fixer">
+          <div class="agent-header">
+            <div style="display:flex;align-items:flex-start;gap:1rem">
+              <div class="agent-avatar">🔍</div>
+              <div class="agent-info">
+                <div class="agent-name">Fixer</div>
+                <div class="agent-role">Debugger Specialist</div>
+                <div class="agent-meta">
+                  <span class="status-dot online" data-name="Fixer"></span>
+                  <span class="badge badge-green status-badge" data-name="Fixer">active</span>
+                  <span style="color:var(--text-muted)">·</span>
+                  <span style="font-size:0.75rem;color:var(--text-secondary)">Heartbeat: 1h</span>
+                </div>
+              </div>
+            </div>
+            <div class="agent-controls">
+              <button class="btn-icon toggle-btn" data-name="Fixer" title="Mettre en pause">
+                <svg width="16" height="16"><use href="#icon-pause"/></svg>
+              </button>
+              <button class="btn-icon config-btn" data-name="Fixer" title="Configurer">
+                <svg width="16" height="16"><use href="#icon-settings"/></svg>
+              </button>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.4rem">Skills (5)</div>
+            <div class="skills-list">
+              <span class="badge">Investigation</span>
+              <span class="badge">Profiling</span>
+              <span class="badge">Refactoring</span>
+              <span class="badge">Tests</span>
+              <span class="badge">Logs</span>
+            </div>
+          </div>
+          <div class="agent-stats">
+            <div>
+              <div class="agent-stat-val">312</div>
+              <div class="agent-stat-lbl">Tâches complétées</div>
+            </div>
+            <div>
+              <div class="agent-stat-txt">Bug pagination corrigé</div>
+              <div class="agent-stat-lbl">Dernière action</div>
+            </div>
+          </div>
+          <button class="btn btn-blue-soft open-chat-btn" data-agent="Fixer" style="width:100%;justify-content:center;margin-top:1rem">
+            Communiquer avec Fixer
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Chat View -->
+    <section id="view-chat" class="view">
+
+      <!-- Sidebar -->
+      <div class="chat-sidebar">
+        <div class="chat-sidebar-header">Agents</div>
+        <div class="sidebar-agents">
+          <button class="sidebar-agent-btn active" data-name="Aria">
+            <span class="sa-emoji">🎨</span>
+            <div>
+              <div class="sa-name">Aria</div>
+              <div class="sa-role">Frontend</div>
+            </div>
+            <span class="status-dot online sa-dot"></span>
+          </button>
+          <button class="sidebar-agent-btn" data-name="Kael">
+            <span class="sa-emoji">⚙️</span>
+            <div>
+              <div class="sa-name">Kael</div>
+              <div class="sa-role">Backend</div>
+            </div>
+            <span class="status-dot online sa-dot"></span>
+          </button>
+          <button class="sidebar-agent-btn" data-name="Sentry">
+            <span class="sa-emoji">🔒</span>
+            <div>
+              <div class="sa-name">Sentry</div>
+              <div class="sa-role">Security</div>
+            </div>
+            <span class="status-dot online sa-dot"></span>
+          </button>
+          <button class="sidebar-agent-btn" data-name="Fixer">
+            <span class="sa-emoji">🔍</span>
+            <div>
+              <div class="sa-name">Fixer</div>
+              <div class="sa-role">Debugger</div>
+            </div>
+            <span class="status-dot online sa-dot"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Chat main -->
+      <div class="chat-main">
+        <div class="chat-header">
+          <span id="chat-header-emoji" class="chat-header-emoji">🎨</span>
+          <div>
+            <div id="chat-header-name" class="chat-header-name">Aria</div>
+            <div id="chat-header-role" class="chat-header-role">Frontend Specialist · En ligne</div>
+          </div>
+        </div>
+        <div id="chat-messages" class="chat-messages"></div>
+        <div class="chat-input-row">
+          <input
+            id="chat-input"
+            class="chat-input"
+            type="text"
+            placeholder="Message à Aria…"
+            autocomplete="off"
+          />
+          <button id="chat-send-btn" class="btn btn-primary" style="padding:0.5rem 0.75rem">
+            <svg width="16" height="16"><use href="#icon-send"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+  </main><!-- /#main -->
+
+  <!-- ── SVG Icon sprite (inline) ──────────────────────────────────────── -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="icon-dashboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+      <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+    </symbol>
+    <symbol id="icon-agents" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+    </symbol>
+    <symbol id="icon-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </symbol>
+    <symbol id="icon-activity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+    </symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="20 6 9 17 4 12"/>
+    </symbol>
+    <symbol id="icon-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+    </symbol>
+    <symbol id="icon-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+    </symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+    </symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+    </symbol>
+    <symbol id="icon-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+    </symbol>
+    <symbol id="icon-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>
+    </symbol>
+    <symbol id="icon-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M20 12h2M2 12h2M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41"/>
+    </symbol>
+    <symbol id="icon-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+      <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+    </symbol>
+    <symbol id="icon-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="12" y1="16" x2="12" y2="12"/>
+      <line x1="12" y1="8" x2="12.01" y2="8"/>
+    </symbol>
+  </svg>
+
+  <!-- ── Modals ─────────────────────────────────────────────────────────── -->
+
+  <!-- Generate Agent -->
+  <div id="generate-modal" class="modal-backdrop">
+    <div class="modal">
+      <h2 class="modal-title">✨ Générer un Agent</h2>
+      <div class="form-field">
+        <label class="form-label" for="gen-name">Nom de l'agent</label>
+        <input id="gen-name" class="form-input" type="text" placeholder="ex: Scout" />
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="gen-role">Rôle / Spécialité</label>
+        <input id="gen-role" class="form-input" type="text" placeholder="ex: Data Analyst" />
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="gen-skills">Skills (séparés par des virgules)</label>
+        <input id="gen-skills" class="form-input" type="text" placeholder="ex: Python, SQL, Pandas" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal('generate-modal')">Annuler</button>
+        <button class="btn btn-primary" onclick="generateAgent()">Créer l'agent</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Config Agent -->
+  <div id="config-modal" class="modal-backdrop">
+    <div class="modal">
+      <h2 class="modal-title">⚙️ Configurer <span id="modal-agent-name"></span></h2>
+      <div class="form-field">
+        <label class="form-label" for="cfg-heartbeat">Fréquence heartbeat</label>
+        <input id="cfg-heartbeat" class="form-input" type="text" placeholder="ex: 1h, 2h, 24h" />
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="cfg-priority">Priorité des tâches</label>
+        <select id="cfg-priority" class="form-input">
+          <option value="haute">Haute</option>
+          <option value="normale" selected>Normale</option>
+          <option value="basse">Basse</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="cfg-notes">Notes / Instructions</label>
+        <input id="cfg-notes" class="form-input" type="text" placeholder="Instructions supplémentaires…" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal('config-modal')">Annuler</button>
+        <button class="btn btn-primary" onclick="saveConfig()">Sauvegarder</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast"></div>
+
+</div><!-- /#app -->
+
+<script src="assets/script.js"></script>
+</body>
+</html>

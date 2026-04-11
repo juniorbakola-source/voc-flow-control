@@ -1,0 +1,217 @@
+<!--
+  VOC Flow Control — Agents Manager Component
+  Interactive cards for all 4 agents with pause/resume/configure controls.
+  Included in lovable.html as #view-agents.
+-->
+
+<div class="section-header">
+  <h1 class="section-title">Agents</h1>
+  <button class="btn btn-primary" onclick="openGenerateModal()">
+    <svg width="16" height="16"><use href="#icon-plus"/></svg>
+    Générer un Agent
+  </button>
+</div>
+
+<div class="agents-grid">
+
+  <!-- Aria -->
+  <div class="agent-card" data-agent="Aria">
+    <div class="agent-header">
+      <div style="display:flex;align-items:flex-start;gap:1rem">
+        <div class="agent-avatar">🎨</div>
+        <div class="agent-info">
+          <div class="agent-name">Aria</div>
+          <div class="agent-role">Frontend Specialist</div>
+          <div class="agent-meta">
+            <span class="status-dot online" data-name="Aria"></span>
+            <span class="badge badge-green status-badge" data-name="Aria">active</span>
+            <span style="color:var(--text-muted)">·</span>
+            <span style="font-size:0.75rem;color:var(--text-secondary)">Heartbeat: 2h</span>
+          </div>
+        </div>
+      </div>
+      <div class="agent-controls">
+        <button class="btn-icon toggle-btn" data-name="Aria" title="Mettre en pause">
+          <svg width="16" height="16"><use href="#icon-pause"/></svg>
+        </button>
+        <button class="btn-icon config-btn" data-name="Aria" title="Configurer">
+          <svg width="16" height="16"><use href="#icon-settings"/></svg>
+        </button>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.4rem">Skills (5)</div>
+      <div class="skills-list">
+        <span class="badge">React</span>
+        <span class="badge">Vue</span>
+        <span class="badge">UX</span>
+        <span class="badge">Performance</span>
+        <span class="badge">CSS</span>
+      </div>
+    </div>
+    <div class="agent-stats">
+      <div>
+        <div class="agent-stat-val">156</div>
+        <div class="agent-stat-lbl">Tâches complétées</div>
+      </div>
+      <div>
+        <div class="agent-stat-txt">Optimisation bundle React</div>
+        <div class="agent-stat-lbl">Dernière action</div>
+      </div>
+    </div>
+    <button class="btn btn-blue-soft open-chat-btn" data-agent="Aria" style="width:100%;justify-content:center;margin-top:1rem">
+      Communiquer avec Aria
+    </button>
+  </div>
+
+  <!-- Kael -->
+  <div class="agent-card" data-agent="Kael">
+    <div class="agent-header">
+      <div style="display:flex;align-items:flex-start;gap:1rem">
+        <div class="agent-avatar">⚙️</div>
+        <div class="agent-info">
+          <div class="agent-name">Kael</div>
+          <div class="agent-role">Backend Specialist</div>
+          <div class="agent-meta">
+            <span class="status-dot online" data-name="Kael"></span>
+            <span class="badge badge-green status-badge" data-name="Kael">active</span>
+            <span style="color:var(--text-muted)">·</span>
+            <span style="font-size:0.75rem;color:var(--text-secondary)">Heartbeat: 2h</span>
+          </div>
+        </div>
+      </div>
+      <div class="agent-controls">
+        <button class="btn-icon toggle-btn" data-name="Kael" title="Mettre en pause">
+          <svg width="16" height="16"><use href="#icon-pause"/></svg>
+        </button>
+        <button class="btn-icon config-btn" data-name="Kael" title="Configurer">
+          <svg width="16" height="16"><use href="#icon-settings"/></svg>
+        </button>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.4rem">Skills (5)</div>
+      <div class="skills-list">
+        <span class="badge">APIs</span>
+        <span class="badge">PostgreSQL</span>
+        <span class="badge">Redis</span>
+        <span class="badge">Docker</span>
+        <span class="badge">Node.js</span>
+      </div>
+    </div>
+    <div class="agent-stats">
+      <div>
+        <div class="agent-stat-val">203</div>
+        <div class="agent-stat-lbl">Tâches complétées</div>
+      </div>
+      <div>
+        <div class="agent-stat-txt">Déploiement API auth</div>
+        <div class="agent-stat-lbl">Dernière action</div>
+      </div>
+    </div>
+    <button class="btn btn-blue-soft open-chat-btn" data-agent="Kael" style="width:100%;justify-content:center;margin-top:1rem">
+      Communiquer avec Kael
+    </button>
+  </div>
+
+  <!-- Sentry -->
+  <div class="agent-card" data-agent="Sentry">
+    <div class="agent-header">
+      <div style="display:flex;align-items:flex-start;gap:1rem">
+        <div class="agent-avatar">🔒</div>
+        <div class="agent-info">
+          <div class="agent-name">Sentry</div>
+          <div class="agent-role">Security Specialist</div>
+          <div class="agent-meta">
+            <span class="status-dot online" data-name="Sentry"></span>
+            <span class="badge badge-green status-badge" data-name="Sentry">active</span>
+            <span style="color:var(--text-muted)">·</span>
+            <span style="font-size:0.75rem;color:var(--text-secondary)">Heartbeat: 24h</span>
+          </div>
+        </div>
+      </div>
+      <div class="agent-controls">
+        <button class="btn-icon toggle-btn" data-name="Sentry" title="Mettre en pause">
+          <svg width="16" height="16"><use href="#icon-pause"/></svg>
+        </button>
+        <button class="btn-icon config-btn" data-name="Sentry" title="Configurer">
+          <svg width="16" height="16"><use href="#icon-settings"/></svg>
+        </button>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.4rem">Skills (5)</div>
+      <div class="skills-list">
+        <span class="badge">Audit</span>
+        <span class="badge">CVE</span>
+        <span class="badge">Compliance</span>
+        <span class="badge">Secrets</span>
+        <span class="badge">OWASP</span>
+      </div>
+    </div>
+    <div class="agent-stats">
+      <div>
+        <div class="agent-stat-val">89</div>
+        <div class="agent-stat-lbl">Tâches complétées</div>
+      </div>
+      <div>
+        <div class="agent-stat-txt">Scan quotidien complété</div>
+        <div class="agent-stat-lbl">Dernière action</div>
+      </div>
+    </div>
+    <button class="btn btn-blue-soft open-chat-btn" data-agent="Sentry" style="width:100%;justify-content:center;margin-top:1rem">
+      Communiquer avec Sentry
+    </button>
+  </div>
+
+  <!-- Fixer -->
+  <div class="agent-card" data-agent="Fixer">
+    <div class="agent-header">
+      <div style="display:flex;align-items:flex-start;gap:1rem">
+        <div class="agent-avatar">🔍</div>
+        <div class="agent-info">
+          <div class="agent-name">Fixer</div>
+          <div class="agent-role">Debugger Specialist</div>
+          <div class="agent-meta">
+            <span class="status-dot online" data-name="Fixer"></span>
+            <span class="badge badge-green status-badge" data-name="Fixer">active</span>
+            <span style="color:var(--text-muted)">·</span>
+            <span style="font-size:0.75rem;color:var(--text-secondary)">Heartbeat: 1h</span>
+          </div>
+        </div>
+      </div>
+      <div class="agent-controls">
+        <button class="btn-icon toggle-btn" data-name="Fixer" title="Mettre en pause">
+          <svg width="16" height="16"><use href="#icon-pause"/></svg>
+        </button>
+        <button class="btn-icon config-btn" data-name="Fixer" title="Configurer">
+          <svg width="16" height="16"><use href="#icon-settings"/></svg>
+        </button>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.4rem">Skills (5)</div>
+      <div class="skills-list">
+        <span class="badge">Investigation</span>
+        <span class="badge">Profiling</span>
+        <span class="badge">Refactoring</span>
+        <span class="badge">Tests</span>
+        <span class="badge">Logs</span>
+      </div>
+    </div>
+    <div class="agent-stats">
+      <div>
+        <div class="agent-stat-val">312</div>
+        <div class="agent-stat-lbl">Tâches complétées</div>
+      </div>
+      <div>
+        <div class="agent-stat-txt">Bug pagination corrigé</div>
+        <div class="agent-stat-lbl">Dernière action</div>
+      </div>
+    </div>
+    <button class="btn btn-blue-soft open-chat-btn" data-agent="Fixer" style="width:100%;justify-content:center;margin-top:1rem">
+      Communiquer avec Fixer
+    </button>
+  </div>
+
+</div>
