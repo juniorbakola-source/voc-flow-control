@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Bot, Pause, Play, Settings, Plus, ArrowLeft, MessageSquare, Zap, Shield, Search } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 interface Agent {
@@ -70,6 +70,7 @@ const navItems = [
 
 const Agents = () => {
   const [agents, setAgents] = useState(agentsData);
+  const navigate = useNavigate();
 
   const toggleAgent = (name: string) => {
     setAgents((prev) =>
@@ -213,7 +214,10 @@ const Agents = () => {
                 </div>
 
                 {/* CTA */}
-                <button className="w-full mt-4 py-2.5 rounded-md bg-primary/10 text-primary text-sm font-medium hover:bg-primary/20 transition-colors">
+                <button
+                  onClick={() => navigate(`/agents/chat/${agent.name}`)}
+                  className="w-full mt-4 py-2.5 rounded-md bg-primary/10 text-primary text-sm font-medium hover:bg-primary/20 transition-colors"
+                >
                   Communiquer avec {agent.name}
                 </button>
               </motion.div>
