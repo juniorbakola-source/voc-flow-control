@@ -378,7 +378,6 @@ nav {
 
 /* ── Chat view ───────────────────────────────── */
 #view-chat {
-  display: none;
   height: calc(100vh - 60px - 4rem);
 }
 

@@ -91,12 +91,22 @@ const Router = (() => {
     // Update view visibility
     views.forEach(v => {
       const el = document.getElementById('view-' + v)
-      if (el) el.classList.toggle('active', v === view)
+      if (el) {
+        if (v === view) {
+          el.classList.add('active')
+        } else {
+          el.classList.remove('active')
+        }
+      }
     })
 
     // Update nav buttons
     document.querySelectorAll('.nav-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.view === view)
+      if (btn.dataset.view === view) {
+        btn.classList.add('active')
+      } else {
+        btn.classList.remove('active')
+      }
     })
 
     // If navigating to chat with an agent, select them
