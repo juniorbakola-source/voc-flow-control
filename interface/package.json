@@ -15,7 +15,7 @@
     "socket.io-client": "^4.7.0",
     "zustand": "^4.4.0",
     "axios": "^1.6.0",
-    "date-fns": "^3.0.0",
+    "date-fns": "^4.1.0",
     "lucide-react": "^0.294.0",
     "recharts": "^2.10.0"
   },
