@@ -10,173 +10,41 @@ const app = express();
 app.use(express.json());
 
 // Configuration
-const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN; // @henri3Pbot ou nouveau
-const WEBHOOK_URL = process.env.WEBHOOK_URL; // Ton URL publique
+const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const PORT = process.env.PORT || 3001;
+
+if (!BOT_TOKEN) {
+  console.error('❌ TELEGRAM_BOT_TOKEN is required');
+  process.exit(1);
+}
+
 const AGENTS = {
-  aria: {
-    name: 'Aria',
-    emoji: '🎨',
-    role: 'Frontend',
-    keywords: ['react', 'css', 'ui', 'frontend', 'component', 'tsx', 'jsx'],
-    color: '\x1b[35m'
-  },
-  kael: {
-    name: 'Kael',
-    emoji: '⚙️',
-    role: 'Backend',
-    keywords: ['api', 'database', 'server', 'backend', 'docker', 'deploy'],
-    color: '\x1b[34m'
-  },
-  sentry: {
-    name: 'Sentry',
-    emoji: '🔒',
-    role: 'Security',
-    keywords: ['security', 'vulnerability', 'auth', 'password', 'hack', 'cve'],
-    color: '\x1b[31m'
-  },
-  fixer: {
-    name: 'Fixer',
-    emoji: '🔍',
-    role: 'Debugger',
-    keywords: ['bug', 'error', 'fix', 'debug', 'crash', 'issue'],
-    color: '\x1b[33m'
-  }
+  aria: { name: 'Aria', emoji: '🎨', role: 'Frontend' },
+  kael: { name: 'Kael', emoji: '⚙️', role: 'Backend' },
+  sentry: { name: 'Sentry', emoji: '🔒', role: 'Security' },
+  fixer: { name: 'Fixer', emoji: '🔍', role: 'Debugger' }
 };
 
-// Routeur intelligent
 function routeToAgent(message) {
   const lower = message.toLowerCase();
-  
-  // Check explicit mentions @agent
   if (lower.includes('@aria')) return 'aria';
   if (lower.includes('@kael')) return 'kael';
   if (lower.includes('@sentry')) return 'sentry';
   if (lower.includes('@fixer')) return 'fixer';
   
-  // Auto-route by keywords
-  for (const [agentId, agent] of Object.entries(AGENTS)) {
-    if (agent.keywords.some(k => lower.includes(k))) {
-      return agentId;
-    }
-  }
+  const keywords = {
+    aria: ['react', 'css', 'ui', 'frontend', 'component', 'html'],
+    kael: ['api', 'database', 'server', 'backend', 'docker', 'node'],
+    sentry: ['security', 'auth', 'password', 'hack', 'cve', 'vulnerability'],
+    fixer: ['bug', 'error', 'fix', 'debug', 'crash', 'issue']
+  };
   
-  return null; // Default to all or ask
+  for (const [agent, words] of Object.entries(keywords)) {
+    if (words.some(w => lower.includes(w))) return agent;
+  }
+  return null;
 }
 
-// Générer réponse agent
-async function generateAgentResponse(agentId, message, userName) {
-  const agent = AGENTS[agentId];
-  
-  // Ici tu connectes ton modèle AI (OpenAI, Claude, etc.)
-  // Pour l'instant, réponse structurée
-  return `${agent.emoji} **${agent.name}** (${agent.role})
-
-Analyse de ta demande :
-\`${message}\`
-
----
-
-🧠 **Analyse :**
-Je décompose ton problème en étapes...
-
-💡 **Solution proposée :**
-1. Identification du contexte
-2. Exploration des approches
-3. Convergence vers solution
-
-⚡ **Action recommandée :**
-Pour une réponse complète avec code, précise :
-- Ton framework (React/Vue/Node/etc.)
-- Le contexte (fichier, ligne d'erreur)
-
----
-📎 *Mentionne @${agentId} pour me recontacter*`;
-}
-
-// Webhook handler
-app.post('/webhook', async (req, res) => {
-  const { message } = req.body;
-  if (!message || !message.text) return res.sendStatus(200);
-  
-  const chatId = message.chat.id;
-  const text = message.text;
-  const userName = message.from.first_name || 'Utilisateur';
-  
-  // Commandes spéciales
-  if (text === '/start') {
-    await sendMessage(chatId, `🤖 **VOC Flow Control - Agents**
-
-Bienvenue ${userName} !
-
-**Agents disponibles :**
-🎨 @aria - Frontend (React, CSS, UI)
-⚙️ @kael - Backend (API, DB, DevOps)
-🔒 @sentry - Sécurité (Audit, CVE)
-🔍 @fixer - Debug (Bugs, Optimisation)
-
-**Comment utiliser :**
-• Mentionne un agent : "@aria créer un formulaire"
-• Laisse-moi router : "j'ai un bug en React"
-• Commandes : /agents, /status, /help`);
-    return res.sendStatus(200);
-  }
-  
-  if (text === '/agents') {
-    await sendMessage(chatId, `**🤖 Équipe d'Agents**
-
-🎨 **Aria** - Frontend Specialist
-   React, Vue, CSS, Performance, UX
-
-⚙️ **Kael** - Backend Specialist
-   APIs, Bases de données, Docker, CI/CD
-
-🔒 **Sentry** - Security Specialist
-   Audit, CVE, Compliance, Secrets
-
-🔍 **Fixer** - Debugger Specialist
-   Investigation, Optimisation, Tests
-
-Mentionne l'agent avec @nom pour lui parler !`);
-    return res.sendStatus(200);
-  }
-  
-  if (text === '/status') {
-    await sendMessage(chatId, `**📊 Status des Agents**
-
-🎨 Aria: 🟢 En ligne
-⚙️ Kael: 🟢 En ligne
-🔒 Sentry: 🟢 En ligne
-🔍 Fixer: 🟢 En ligne
-
-🕐 Dernier pulse: ${new Date().toLocaleTimeString()}`);
-    return res.sendStatus(200);
-  }
-  
-  // Router vers agent
-  const agentId = routeToAgent(text);
-  
-  if (agentId) {
-    const response = await generateAgentResponse(agentId, text, userName);
-    await sendMessage(chatId, response);
-  } else {
-    // Demander clarification
-    await sendMessage(chatId, `🤔 Je ne suis pas sûr quel agent contacter.
-
-Ton message : "${text}"
-
-**Précise avec :**
-• @aria pour frontend/UI
-• @kael pour backend/API
-• @sentry pour sécurité
-• @fixer pour bugs/debug
-
-Ou tape /agents pour voir l'équipe.`);
-  }
-  
-  res.sendStatus(200);
-});
-
-// Envoyer message Telegram
 async function sendMessage(chatId, text) {
   try {
     await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
@@ -185,29 +53,93 @@ async function sendMessage(chatId, text) {
       parse_mode: 'Markdown'
     });
   } catch (err) {
-    console.error('Telegram error:', err.message);
+    console.error('Send error:', err.message);
   }
 }
 
-// Setup webhook
-async function setupWebhook() {
-  if (!WEBHOOK_URL) {
-    console.log('ℹ️  WEBHOOK_URL not set, skipping webhook setup');
-    return;
-  }
-  
+// Health check
+app.get('/', (req, res) => {
+  res.json({ status: 'ok', service: 'VOC Telegram Bot', agents: Object.keys(AGENTS) });
+});
+
+// Webhook handler
+app.post('/webhook', async (req, res) => {
   try {
-    await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/setWebhook`, {
-      url: `${WEBHOOK_URL}/webhook`
-    });
-    console.log('✅ Webhook set:', WEBHOOK_URL);
+    const { message } = req.body;
+    if (!message || !message.text) return res.sendStatus(200);
+    
+    const chatId = message.chat.id;
+    const text = message.text;
+    const userName = message.from?.first_name || 'User';
+    
+    console.log(`📩 ${userName}: ${text}`);
+    
+    // Commandes
+    if (text === '/start') {
+      await sendMessage(chatId, `🤖 *VOC Flow Control - Agents*\n\nBienvenue ${userName}!\n\n*Agents disponibles :*\n🎨 @aria - Frontend (React, CSS, UI)\n⚙️ @kael - Backend (API, DB, DevOps)\n🔒 @sentry - Sécurité (Audit, CVE)\n🔍 @fixer - Debug (Bugs, Optimisation)\n\n*Comment utiliser :*\n• Mentionne un agent: "@aria créer un formulaire"\n• Laisse-moi router: "j'ai un bug en React"\n• Commandes: /agents, /status, /help`);
+      return res.sendStatus(200);
+    }
+    
+    if (text === '/agents') {
+      const list = Object.entries(AGENTS).map(([id, a]) => `${a.emoji} *${a.name}* - ${a.role}`).join('\n');
+      await sendMessage(chatId, `*🤖 Équipe d'Agents*\n\n${list}\n\nMentionne l'agent avec @nom pour lui parler!`);
+      return res.sendStatus(200);
+    }
+    
+    if (text === '/status') {
+      await sendMessage(chatId, `*📊 Status des Agents*\n\n🎨 Aria: 🟢 En ligne\n⚙️ Kael: 🟢 En ligne\n🔒 Sentry: 🟢 En ligne\n🔍 Fixer: 🟢 En ligne\n\n🕐 Dernier pulse: ${new Date().toLocaleTimeString()}`);
+      return res.sendStatus(200);
+    }
+    
+    if (text === '/help') {
+      await sendMessage(chatId, `*Commandes :*\n/start - Démarrer\n/agents - Liste des agents\n/status - Status système\n/help - Aide\n\n*Exemples :*\n@aria créer un bouton React\n@kael API pour users\nJ'ai un bug avec useEffect`);
+      return res.sendStatus(200);
+    }
+    
+    // Router vers agent
+    const agentId = routeToAgent(text);
+    
+    if (agentId) {
+      const agent = AGENTS[agentId];
+      const response = `${agent.emoji} *${agent.name}* (${agent.role})\n\nAnalyse de : "${text}"\n\n💡 *Je traite ta demande...*\n\nPour une réponse complète avec code, précise:\n- Ton framework (React/Vue/Node/etc.)\n- Le contexte (fichier, ligne d'erreur)\n\n---\n📎 _Mentionne @${agentId} pour me recontacter_`;
+      await sendMessage(chatId, response);
+    } else {
+      await sendMessage(chatId, `🤔 Je ne suis pas sûr quel agent contacter.\n\nTon message : "${text}"\n\n*Précise avec :*\n• @aria pour frontend/UI\n• @kael pour backend/API\n• @sentry pour sécurité\n• @fixer pour bugs/debug\n\nOu tape /agents pour voir l'équipe.`);
+    }
+    
+    res.sendStatus(200);
   } catch (err) {
-    console.error('❌ Webhook setup failed:', err.message);
+    console.error('Webhook error:', err.message);
+    res.sendStatus(500);
+  }
+});
+
+// Setup webhook on start
+async function setupWebhook() {
+  try {
+    // Get the Render URL from environment or skip
+    const renderService = process.env.RENDER_SERVICE_NAME;
+    if (!renderService) {
+      console.log('ℹ️  Not on Render, skipping webhook setup');
+      return;
+    }
+    
+    const webhookUrl = `https://${renderService}.onrender.com/webhook`;
+    const res = await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/setWebhook`, {
+      url: webhookUrl
+    });
+    
+    if (res.data.ok) {
+      console.log('✅ Webhook set:', webhookUrl);
+    } else {
+      console.error('❌ Webhook failed:', res.data);
+    }
+  } catch (err) {
+    console.error('❌ Webhook setup error:', err.message);
   }
 }
 
-// Démarrer
-const PORT = process.env.PORT || 3001;
+// Start server
 app.listen(PORT, () => {
   console.log(`🤖 VOC Telegram Bot running on port ${PORT}`);
   console.log('\n📱 Agents ready:');
@@ -216,5 +148,3 @@ app.listen(PORT, () => {
   }
   setupWebhook();
 });
-
-module.exports = app;
