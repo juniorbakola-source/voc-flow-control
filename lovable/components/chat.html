@@ -1,0 +1,80 @@
+<!--
+  VOC Flow Control — Chat Component
+  Real-time chat interface with agent sidebar and message simulation.
+  Included in lovable.html as #view-chat.
+-->
+
+<!-- Sidebar -->
+<div class="chat-sidebar">
+  <div class="chat-sidebar-header">Agents</div>
+  <div class="sidebar-agents">
+
+    <button class="sidebar-agent-btn active" data-name="Aria">
+      <span class="sa-emoji">🎨</span>
+      <div>
+        <div class="sa-name">Aria</div>
+        <div class="sa-role">Frontend</div>
+      </div>
+      <span class="status-dot online sa-dot"></span>
+    </button>
+
+    <button class="sidebar-agent-btn" data-name="Kael">
+      <span class="sa-emoji">⚙️</span>
+      <div>
+        <div class="sa-name">Kael</div>
+        <div class="sa-role">Backend</div>
+      </div>
+      <span class="status-dot online sa-dot"></span>
+    </button>
+
+    <button class="sidebar-agent-btn" data-name="Sentry">
+      <span class="sa-emoji">🔒</span>
+      <div>
+        <div class="sa-name">Sentry</div>
+        <div class="sa-role">Security</div>
+      </div>
+      <span class="status-dot online sa-dot"></span>
+    </button>
+
+    <button class="sidebar-agent-btn" data-name="Fixer">
+      <span class="sa-emoji">🔍</span>
+      <div>
+        <div class="sa-name">Fixer</div>
+        <div class="sa-role">Debugger</div>
+      </div>
+      <span class="status-dot online sa-dot"></span>
+    </button>
+
+  </div>
+</div>
+
+<!-- Chat main area -->
+<div class="chat-main">
+  <!-- Header -->
+  <div class="chat-header">
+    <span id="chat-header-emoji" class="chat-header-emoji">🎨</span>
+    <div>
+      <div id="chat-header-name" class="chat-header-name">Aria</div>
+      <div id="chat-header-role" class="chat-header-role">Frontend Specialist · En ligne</div>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div id="chat-messages" class="chat-messages">
+    <!-- Populated by script.js Chat.renderMessages() -->
+  </div>
+
+  <!-- Input -->
+  <div class="chat-input-row">
+    <input
+      id="chat-input"
+      class="chat-input"
+      type="text"
+      placeholder="Message à Aria…"
+      autocomplete="off"
+    />
+    <button id="chat-send-btn" class="btn btn-primary" style="padding:0.5rem 0.75rem">
+      <svg width="16" height="16"><use href="#icon-send"/></svg>
+    </button>
+  </div>
+</div>
