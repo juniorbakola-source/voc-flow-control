@@ -61,7 +61,7 @@ jobs:
           cat report.md
 
       - name: Create Daily Issue
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const fs = require('fs');

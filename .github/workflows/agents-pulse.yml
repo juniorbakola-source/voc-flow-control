@@ -59,7 +59,7 @@ jobs:
 
       - name: Report to GitHub Issues (if issues found)
         if: failure() || steps.aria.outcome == 'failure'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             github.rest.issues.create({
@@ -163,7 +163,7 @@ jobs:
 
       - name: Create Security Report Issue
         if: failure()
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             github.rest.issues.create({
