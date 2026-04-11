@@ -1,0 +1,117 @@
+<!--
+  VOC Flow Control — Lovable Shared Utilities
+  This fragment contains reusable HTML templates (SVG icons, modal skeletons).
+  Included by lovable.html via server-side or copy-paste.
+-->
+
+<!-- ── SVG Icon helpers (inline, referenced by id) ───────────────────────── -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="icon-dashboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+    <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+  </symbol>
+  <symbol id="icon-agents" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+    <circle cx="9" cy="7" r="4"/>
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+  </symbol>
+  <symbol id="icon-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </symbol>
+  <symbol id="icon-activity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+  </symbol>
+  <symbol id="icon-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+  </symbol>
+  <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <polyline points="20 6 9 17 4 12"/>
+  </symbol>
+  <symbol id="icon-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+  </symbol>
+  <symbol id="icon-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+    <circle cx="9" cy="7" r="4"/>
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+  </symbol>
+  <symbol id="icon-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+  </symbol>
+  <symbol id="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+  </symbol>
+  <symbol id="icon-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+  </symbol>
+  <symbol id="icon-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>
+  </symbol>
+  <symbol id="icon-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="12" r="3"/>
+    <path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M20 12h2M2 12h2M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41"/>
+  </symbol>
+  <symbol id="icon-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+    <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+  </symbol>
+  <symbol id="icon-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/>
+    <line x1="12" y1="8" x2="12.01" y2="8"/>
+  </symbol>
+</svg>
+
+<!-- ── Generate Agent modal ───────────────────────────────────────────────── -->
+<div id="generate-modal" class="modal-backdrop">
+  <div class="modal">
+    <h2 class="modal-title">✨ Générer un Agent</h2>
+    <div class="form-field">
+      <label class="form-label" for="gen-name">Nom de l'agent</label>
+      <input id="gen-name" class="form-input" type="text" placeholder="ex: Scout" />
+    </div>
+    <div class="form-field">
+      <label class="form-label" for="gen-role">Rôle / Spécialité</label>
+      <input id="gen-role" class="form-input" type="text" placeholder="ex: Data Analyst" />
+    </div>
+    <div class="form-field">
+      <label class="form-label" for="gen-skills">Skills (séparés par des virgules)</label>
+      <input id="gen-skills" class="form-input" type="text" placeholder="ex: Python, SQL, Pandas" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('generate-modal')">Annuler</button>
+      <button class="btn btn-primary" onclick="generateAgent()">Créer l'agent</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Config modal ───────────────────────────────────────────────────────── -->
+<div id="config-modal" class="modal-backdrop">
+  <div class="modal">
+    <h2 class="modal-title">⚙️ Configurer <span id="modal-agent-name"></span></h2>
+    <div class="form-field">
+      <label class="form-label" for="cfg-heartbeat">Fréquence heartbeat</label>
+      <input id="cfg-heartbeat" class="form-input" type="text" placeholder="ex: 1h, 2h, 24h" />
+    </div>
+    <div class="form-field">
+      <label class="form-label" for="cfg-priority">Priorité des tâches</label>
+      <select id="cfg-priority" class="form-input">
+        <option value="haute">Haute</option>
+        <option value="normale" selected>Normale</option>
+        <option value="basse">Basse</option>
+      </select>
+    </div>
+    <div class="form-field">
+      <label class="form-label" for="cfg-notes">Notes / Instructions</label>
+      <input id="cfg-notes" class="form-input" type="text" placeholder="Instructions supplémentaires…" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('config-modal')">Annuler</button>
+      <button class="btn btn-primary" onclick="saveConfig()">Sauvegarder</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Toast ──────────────────────────────────────────────────────────────── -->
+<div id="toast"></div>
