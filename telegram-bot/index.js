@@ -1,6 +1,6 @@
 /**
  * VOC Flow Control - Telegram Bot
- * Multi-agent system - Chaque agent répond individuellement
+ * Multi-agent system avec analyse collaborative
  */
 
 const express = require('express');
@@ -382,6 +382,41 @@ async function sendMessage(chatId, text) {
   }
 }
 
+// Analyse collaborative par les 4 agents
+async function teamAnalysis(chatId, userMessage) {
+  const order = ['aria', 'kael', 'sentry', 'fixer'];
+  
+  // Message d'introduction
+  await sendMessage(chatId, `🤖 *ANALYSE D'ÉQUIPE VOC*
+━━━━━━━━━━━━━━━━━━━━━
+
+📋 *Requête :* _"${userMessage}"_
+
+Les 4 agents analysent tour à tour...`);
+  
+  // Chaque agent répond avec son expertise
+  for (const agentId of order) {
+    const agent = AGENTS[agentId];
+    const response = agent.response(userMessage.toLowerCase());
+    
+    await sendMessage(chatId, response);
+    
+    // Petite pause entre chaque réponse pour pas spammer
+    await new Promise(resolve => setTimeout(resolve, 500));
+  }
+  
+  // Synthèse finale
+  await sendMessage(chatId, `✅ *ANALYSE COMPLÈTE*
+━━━━━━━━━━━━━━━━━━━━━
+
+🎨 *Aria* → UI/UX & Frontend
+⚙️ *Kael* → Architecture & Backend  
+🔒 *Sentry* → Sécurité & Audit
+🔍 *Fixer* → Debug & Optimisation
+
+💡 *Prochaine étape :* Implémente les recommandations agent par agent, ou pose des questions spécifiques avec @nom_agent`);
+}
+
 // Health check
 app.get('/', (req, res) => {
   res.json({ 
@@ -416,10 +451,18 @@ Bienvenue ${userName} !
 🔒 @sentry — Sécurité (Audit, CVE)
 🔍 @fixer — Debug (Bugs, Optimisation)
 
-*Comment me parler :*
-• Mentionne un agent : \`@aria créer un bouton\`
-• Je détecte auto : \`j'ai un bug\` → Fixer
-• Commandes : /agents /status /help`);
+*Commandes spéciales :*
+/team [votre requête] — Analyse par les 4 agents
+/agents — Voir l'équipe
+/status — Health check
+/help — Aide`);
+      return res.sendStatus(200);
+    }
+    
+    // TEAM ANALYSIS - Les 4 agents analysent ensemble
+    if (text.startsWith('/team ') || text.startsWith('/all ')) {
+      const query = text.substring(text.indexOf(' ') + 1);
+      await teamAnalysis(chatId, query);
       return res.sendStatus(200);
     }
     
@@ -446,11 +489,16 @@ Bienvenue ${userName} !
 \`@sentry vérifier sécurité JWT\`
 \`@fixer bug useEffect infinite loop\`
 
+*Analyse d'équipe :*
+\`/team créer une app React avec auth\`
+Les 4 agents analysent tour à tour !
+
 *Détection auto :*
 Je reconnais les mots-clés et route vers le bon agent.
 
 *Commandes :*
 /start — Démarrer
+/team — Analyse collaborative
 /agents — Voir l'équipe
 /status — Health check
 /help — Cette aide`);
@@ -474,7 +522,10 @@ Ton message : "${text}"
 🔒 \`@sentry\` — Sécurité, Auth, Audit
 🔍 \`@fixer\` — Bugs, Debug, Optimisation
 
-Ou tape /agents pour voir l'équipe.`);
+*Ou utilise :*
+\`/team ta requête\` pour une analyse complète
+
+Tape /agents pour voir l'équipe.`);
     }
     
     res.sendStatus(200);
