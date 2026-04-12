@@ -1,5 +1,8 @@
 import "@testing-library/jest-dom";
 
+// Mock scrollIntoView which is not available in jsdom
+window.HTMLElement.prototype.scrollIntoView = () => {};
+
 Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: (query: string) => ({
