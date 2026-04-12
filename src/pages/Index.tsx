@@ -118,7 +118,89 @@ const Index = () => {
           <SourcesMethodology />
         </motion.section>
 
-        {/* Pied de page */}
+        {/* Agent Hub */}
+        <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65 }}>
+          <div className="border border-border rounded-lg bg-card overflow-hidden">
+            <div className="p-5 border-b border-border flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="h-9 w-9 rounded-lg bg-primary/20 border border-primary/40 flex items-center justify-center">
+                  <Bot className="text-primary" size={18} />
+                </div>
+                <div>
+                  <h2 className="text-sm font-mono font-bold text-foreground tracking-wide">AGENT HUB</h2>
+                  <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest">
+                    Équipe d'agents autonomes • {agents.filter(a => a.status === "active").length} actifs
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => navigate("/agents")}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-primary/10 text-primary text-xs font-medium hover:bg-primary/20 transition-colors"
+              >
+                Voir tout
+                <ArrowRight size={14} />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-5">
+              {agents.map((agent, i) => (
+                <motion.div
+                  key={agent.name}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.7 + i * 0.05 }}
+                  className="group border border-border rounded-lg p-4 hover:border-primary/40 transition-all cursor-pointer bg-background/50"
+                  onClick={() => navigate(`/agents/chat/${agent.name}`)}
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/30 to-accent/20 border border-primary/20 flex items-center justify-center text-lg">
+                      {agent.emoji}
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-foreground">{agent.name}</h3>
+                      <p className="text-[10px] text-muted-foreground">{agent.role}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse" />
+                      <span className="text-[10px] text-success font-mono">Actif</span>
+                    </div>
+                    <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                      <Zap size={10} />
+                      <span>{agent.tasks} tâches</span>
+                    </div>
+                  </div>
+                  <button
+                    className="w-full mt-3 py-1.5 rounded text-[11px] font-medium bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors flex items-center justify-center gap-1.5"
+                    onClick={(e) => { e.stopPropagation(); navigate(`/agents/chat/${agent.name}`); }}
+                  >
+                    <MessageSquare size={12} />
+                    Communiquer
+                  </button>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="px-5 pb-4 flex gap-2">
+              <button
+                onClick={() => navigate("/agents/chats")}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-secondary text-secondary-foreground text-xs hover:bg-secondary/80 transition-colors"
+              >
+                <MessageSquare size={12} />
+                Tous les chats
+              </button>
+              <button
+                onClick={() => navigate("/agents/settings")}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-secondary text-secondary-foreground text-xs hover:bg-secondary/80 transition-colors"
+              >
+                <Settings size={12} />
+                Paramètres
+              </button>
+            </div>
+          </div>
+        </motion.section>
+
         <footer className="border-t pt-4 pb-8 flex items-center justify-between text-[10px] font-mono text-muted-foreground">
           <span>ELKA Suspension — Système VOC v1.0 • World Class Manufacturing</span>
           <span>Données : 559 plaintes • 1 095 inspections • 150 avis en ligne</span>
