@@ -24,6 +24,7 @@ const agents = [
 ];
 
 const Index = () => {
+  const navigate = useNavigate();
   const { data: liveKpis } = useLiveKPIs();
   const displayKpis = liveKpis || kpis;
 
