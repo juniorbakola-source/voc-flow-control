@@ -3,6 +3,7 @@ import { Bot, Pause, Play, Settings, Plus, MessageSquare, Zap, Shield, Search } 
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import AgentsSidebar from "@/components/agents/AgentsSidebar";
+import GenerateAgentDialog from "@/components/agents/GenerateAgentDialog";
 
 interface Agent {
   name: string;
@@ -13,7 +14,6 @@ interface Agent {
   heartbeat: string;
   tasksCompleted: number;
   lastAction: string;
-  icon: React.ElementType;
 }
 
 const agentsData: Agent[] = [
@@ -26,7 +26,6 @@ const agentsData: Agent[] = [
     heartbeat: "2h",
     tasksCompleted: 156,
     lastAction: "Optimisation bundle React",
-    icon: Zap,
   },
   {
     name: "Kael",
@@ -37,7 +36,6 @@ const agentsData: Agent[] = [
     heartbeat: "2h",
     tasksCompleted: 203,
     lastAction: "Déploiement API auth",
-    icon: Bot,
   },
   {
     name: "Sentry",
@@ -48,7 +46,6 @@ const agentsData: Agent[] = [
     heartbeat: "24h",
     tasksCompleted: 89,
     lastAction: "Scan quotidien complété",
-    icon: Shield,
   },
   {
     name: "Fixer",
@@ -59,10 +56,8 @@ const agentsData: Agent[] = [
     heartbeat: "1h",
     tasksCompleted: 312,
     lastAction: "Bug pagination corrigé",
-    icon: Search,
   },
 ];
-
 
 const Agents = () => {
   const [agents, setAgents] = useState(agentsData);
@@ -78,11 +73,23 @@ const Agents = () => {
     );
   };
 
+  const handleGenerateAgent = (newAgent: { name: string; emoji: string; role: string; skills: string[] }) => {
+    setAgents((prev) => [
+      ...prev,
+      {
+        ...newAgent,
+        status: "active" as const,
+        heartbeat: "1h",
+        tasksCompleted: 0,
+        lastAction: "Agent créé",
+      },
+    ]);
+  };
+
   return (
     <div className="min-h-screen flex bg-background">
       <AgentsSidebar activeItem="Agents" />
 
-      {/* Main Content */}
       <main className="flex-1 overflow-auto">
         <header className="border-b border-border bg-card/80 backdrop-blur-sm sticky top-0 z-10 px-8 py-4">
           <div className="flex items-center justify-between">
@@ -90,10 +97,7 @@ const Agents = () => {
               <h1 className="text-2xl font-bold text-foreground">Agents</h1>
               <p className="text-sm text-muted-foreground">Gérez et surveillez vos agents autonomes</p>
             </div>
-            <button className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors">
-              <Plus size={16} />
-              Générer un Agent
-            </button>
+            <GenerateAgentDialog onGenerate={handleGenerateAgent} />
           </div>
         </header>
 
