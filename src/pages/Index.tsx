@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { Bot, MessageSquare, Settings, ArrowRight, Zap } from "lucide-react";
 import { kpis } from "@/data/vocData";
 import { KPICard } from "@/components/voc/KPICard";
 import { InputChannels } from "@/components/voc/InputChannels";
@@ -13,6 +15,13 @@ import { QualityMetrics } from "@/components/voc/QualityMetrics";
 import { SourcesMethodology } from "@/components/voc/SourcesMethodology";
 import { DataManagement } from "@/components/voc/DataManagement";
 import { useLiveKPIs } from "@/hooks/useLiveKPIs";
+
+const agents = [
+  { name: "Aria", emoji: "🎨", role: "Frontend Specialist", status: "active", tasks: 156 },
+  { name: "Kael", emoji: "⚙️", role: "Backend Specialist", status: "active", tasks: 203 },
+  { name: "Sentry", emoji: "🔒", role: "Security Specialist", status: "active", tasks: 89 },
+  { name: "Fixer", emoji: "🔍", role: "Debugger Specialist", status: "active", tasks: 312 },
+];
 
 const Index = () => {
   const { data: liveKpis } = useLiveKPIs();
