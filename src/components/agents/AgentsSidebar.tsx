@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import { Bot, MessageSquare, Settings, ArrowLeft } from "lucide-react";
+import { Bot, MessageSquare, Settings, ArrowLeft, Users } from "lucide-react";
 
 const navItems = [
   { label: "Agents", icon: Bot, path: "/agents" },
   { label: "Chat", icon: MessageSquare, path: "/agents/chats" },
+  { label: "Chat de Groupe", icon: Users, path: "/agents/group-chat" },
   { label: "Settings", icon: Settings, path: "/agents/settings" },
 ];
 

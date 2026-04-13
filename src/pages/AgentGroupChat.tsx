@@ -43,14 +43,15 @@ const AgentGroupChat = () => {
     setLoading(true);
 
     // Build conversation history for context
-    const history = messages.flatMap((msg) => {
-      if (msg.type === "user") return [{ role: "user" as const, content: msg.content! }];
-      if (msg.replies) {
+    const history: Array<{ role: "user" | "assistant"; content: string }> = [];
+    for (const msg of messages) {
+      if (msg.type === "user") {
+        history.push({ role: "user", content: msg.content! });
+      } else if (msg.replies) {
         const combined = msg.replies.map((r) => `${r.emoji} ${r.name}: ${r.reply}`).join("\n\n");
-        return [{ role: "assistant" as const, content: combined }];
+        history.push({ role: "assistant", content: combined });
       }
-      return [];
-    });
+    }
     history.push({ role: "user", content: text });
 
     try {
