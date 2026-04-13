@@ -8,6 +8,7 @@ import Agents from "./pages/Agents.tsx";
 import AgentChat from "./pages/AgentChat.tsx";
 import AgentsChatList from "./pages/AgentsChatList.tsx";
 import AgentsSettings from "./pages/AgentsSettings.tsx";
+import AgentGroupChat from "./pages/AgentGroupChat.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/agents/chats" element={<AgentsChatList />} />
           <Route path="/agents/chat/:agentName" element={<AgentChat />} />
           <Route path="/agents/settings" element={<AgentsSettings />} />
+          <Route path="/agents/group-chat" element={<AgentGroupChat />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
