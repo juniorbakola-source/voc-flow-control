@@ -16,7 +16,7 @@
     "zustand": "^4.4.0",
     "axios": "^1.6.0",
     "date-fns": "^4.1.0",
-    "lucide-react": "^0.294.0",
+    "lucide-react": "^1.8.0",
     "recharts": "^3.8.1"
   },
   "devDependencies": {
